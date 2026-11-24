@@ -1,0 +1,1072 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2027 신년운세</title>
+<meta name="description" content="생년월일시를 넣으면 2027 정미년의 총운과 달별 흐름, 일·직장운, 재물운, 연애·인간관계운을 쉽게 풀어드려요.">
+<meta property="og:title" content="2027 신년운세">
+<meta property="og:description" content="붉은 양의 해, 2027 정미년. 사주를 몰라도 읽히는 나의 한 해 풀이">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+:root{
+  --bg:#fbf6f0; --card:#ffffff; --card2:#fcf1ee; --line:#f0e3dc; --line2:#e8d4cc;
+  --fg:#3d302e; --muted:#7f6c68; --faint:#ab9891;
+  --pink:#e2738b; --pink2:#c95a73; --pink-soft:#fce6ea; --pink-line:#f2c6cf;
+  --rose1:#fff0f1; --rose2:#fdf6f1; --rose-line:#f3d3d8;
+  --good:#3f8f62; --good-soft:#e5f3ea; --warn:#b97a1f; --warn-soft:#fbf0dc; --risk:#cc4f63; --risk-soft:#fde7ea;
+  --mok:#4f8a4f; --hwa:#d0594b; --to:#b8892f; --geum:#8b8791; --su:#4a7fbf;
+  --r:22px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.75 'Pretendard','Noto Sans KR',system-ui,sans-serif;word-break:keep-all;-webkit-font-smoothing:antialiased}
+.wrap{max-width:600px;margin:0 auto;padding:0 16px 120px}
+b{font-weight:700}
+p{margin:8px 0}
+button{font:inherit}
+
+/* ── 입력 화면 ── */
+.intro{padding:46px 0 10px;text-align:center}
+.intro .orb{margin:0 auto 18px}
+.intro .eyebrow{color:var(--pink2);font-weight:700;font-size:13px;letter-spacing:.06em}
+.intro h1{font-size:30px;line-height:1.35;margin:8px 0 10px;font-weight:400;letter-spacing:-.02em}
+.intro h1 b{font-weight:800}
+.intro .sub{color:var(--muted);font-size:15px;margin:0}
+.chs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:24px 0 8px;text-align:left}
+.chs div{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px 14px;font-size:13px;color:var(--muted)}
+.chs div b{display:block;color:var(--fg);font-size:14px}
+.chs div span{color:var(--pink2);font-weight:700;font-size:11.5px}
+form.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:22px 18px;margin:16px 0;box-shadow:0 10px 30px rgba(201,90,115,.07)}
+.field{margin:0 0 18px}
+.field > label,.field .lab{display:block;font-weight:700;font-size:14px;margin-bottom:8px}
+.field .lab small,.field > label small{font-weight:500;color:var(--faint);margin-left:6px}
+.row3{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:8px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+select,input[type=text]{width:100%;font:inherit;font-size:15px;color:var(--fg);background:var(--card2);border:1px solid var(--line2);border-radius:12px;padding:12px 12px;appearance:none;-webkit-appearance:none}
+select{background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);background-position:calc(100% - 17px) 52%,calc(100% - 12px) 52%;background-size:5px 5px;background-repeat:no-repeat;padding-right:30px}
+select:focus,input:focus{outline:2px solid var(--pink);outline-offset:1px}
+select:disabled{opacity:.45}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.seg label{position:relative}
+.seg input{position:absolute;opacity:0}
+.seg span{display:block;text-align:center;padding:12px;border-radius:12px;border:1px solid var(--line2);background:var(--card2);font-weight:600;cursor:pointer}
+.seg input:checked + span{background:var(--pink);border-color:var(--pink);color:#fff}
+.seg input:focus-visible + span{outline:2px solid var(--pink2);outline-offset:2px}
+.hint{font-size:12.5px;color:var(--faint);margin-top:6px}
+.err{color:var(--risk);font-size:13.5px;min-height:20px;margin:0 0 6px}
+.cta{display:block;width:100%;border:0;border-radius:16px;background:var(--pink);color:#fff;font-weight:700;font-size:17px;padding:16px;cursor:pointer;box-shadow:0 10px 24px rgba(226,115,139,.35)}
+.cta:hover{background:var(--pink2)}
+.privacy{font-size:12.5px;color:var(--faint);text-align:center;margin-top:12px}
+
+/* ── 결과 상단 바 ── */
+.appbar{position:sticky;top:0;z-index:5;background:rgba(251,246,240,.9);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);margin:0 -16px;padding:12px 16px 0;border-bottom:1px solid var(--line)}
+.appbar .top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.appbar .ttl{font-weight:700;font-size:16px}
+.appbar .back{border:0;background:none;color:var(--muted);font-size:13.5px;cursor:pointer;padding:4px 0}
+.appbar .share{border:1px solid var(--pink-line);background:var(--card);color:var(--pink2);font-size:12.5px;font-weight:700;border-radius:999px;padding:5px 12px;cursor:pointer}
+[role=tablist]{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:12px}
+[role=tablist]::-webkit-scrollbar{display:none}
+[role=tab]{flex:none;font-size:13px;font-weight:600;background:var(--card);color:var(--muted);border:1px solid var(--line2);border-radius:999px;padding:7px 14px;cursor:pointer}
+[role=tab][aria-selected=true]{background:var(--fg);color:#fff;border-color:var(--fg)}
+[role=tab]:focus-visible{outline:2px solid var(--pink);outline-offset:2px}
+[role=tabpanel][hidden]{display:none}
+
+.hero{padding:24px 0 4px}
+.eyebrow{color:var(--pink2);font-weight:700;font-size:13px;letter-spacing:.02em}
+.hero h1{font-size:28px;line-height:1.35;font-weight:400;margin:6px 0 6px;letter-spacing:-.02em}
+.hero h1 b{font-weight:800}
+.meta{color:var(--faint);font-size:12.5px}
+
+.persona{margin:20px 0 10px;border-radius:var(--r);padding:22px 20px;background:linear-gradient(160deg,#fde3e8,#fdf3ec 75%);border:1px solid var(--rose-line)}
+.persona .k{color:var(--pink2);font-size:13px;font-weight:700}
+.persona .nm{font-size:22px;font-weight:800;line-height:1.45;margin:6px 0 10px}
+.persona p{font-size:14.5px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.chips span{font-size:12.5px;font-weight:600;padding:4px 11px;border-radius:999px;background:rgba(255,255,255,.75);color:var(--pink2)}
+.keys{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
+.key{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px}
+.key .l{font-size:12px;color:var(--faint)}
+.key .v{font-weight:800;font-size:16px;margin-top:4px;line-height:1.4}
+.key .v.b{color:var(--pink2)} .key .v.r{color:var(--risk)}
+.key .d{font-size:12.5px;color:var(--muted);margin-top:4px;line-height:1.55}
+.legend{font-size:12px;color:var(--faint);line-height:2.1}
+.notice{border:1px solid #f0d9ad;background:var(--warn-soft);color:#7a5418;border-radius:16px;padding:14px 16px;font-size:13.5px;margin:14px 0}
+.notice button{border:1px solid #e3c48a;background:#fff;color:#7a5418;border-radius:999px;padding:4px 12px;font-size:12.5px;font-weight:700;cursor:pointer;margin-top:6px}
+
+.lv{display:inline-block;font-size:11px;font-weight:700;padding:1px 8px;border-radius:999px;margin-right:6px;vertical-align:2px;background:var(--card2);color:var(--muted);line-height:1.6}
+.lv.k{color:var(--good);background:var(--good-soft)} .lv.g{color:var(--fg);background:#f1e8e4}
+.lv.t{color:var(--warn);background:var(--warn-soft)} .lv.m{color:var(--pink2);background:var(--pink-soft)}
+
+.ch{display:grid;grid-template-columns:1fr 112px;align-items:center;gap:6px;padding:32px 0 8px}
+.ch .no{color:var(--pink2);font-weight:700;font-size:15px}
+.ch h2{font-size:26px;line-height:1.38;font-weight:400;margin:6px 0 10px;letter-spacing:-.02em}
+.ch h2 b{font-weight:800}
+.ch .sub{color:var(--muted);font-size:14.5px;margin:0}
+.ch .sub em{font-style:normal;color:var(--pink2);font-weight:600}
+.orb{width:108px;height:108px;border-radius:50%;display:grid;place-items:center;font-size:52px;position:relative;
+  background:radial-gradient(circle at 32% 28%,#fff 0,#ffe9ee 28%,#f7c1cd 62%,#f0a9b9 100%);
+  box-shadow:0 14px 36px rgba(226,115,139,.35),inset 0 -8px 20px rgba(201,90,115,.25),inset 0 8px 18px rgba(255,255,255,.8)}
+.orb span{filter:drop-shadow(0 6px 10px rgba(201,90,115,.35))}
+
+.toc{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:20px 0 10px}
+.toc a{display:block;text-decoration:none;color:var(--fg);background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px 16px 14px}
+.toc a:hover{border-color:var(--pink-line)}
+.toc .t{font-weight:700;font-size:15px;line-height:1.45;margin:12px 0 6px}
+.toc .t em{font-style:normal;color:var(--pink2)}
+.toc .d{font-size:12.5px;color:var(--muted);line-height:1.6}
+.ico{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;font-size:21px;background:var(--pink-soft);border:1px solid var(--pink-line);flex:none}
+
+.item{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:20px 18px;margin:14px 0;scroll-margin-top:120px}
+.item .hd{display:flex;gap:12px;align-items:flex-start;margin-bottom:10px}
+.item .hd .n{font-size:12px;color:var(--pink2);font-weight:700}
+.item .hd h3{font-size:18px;line-height:1.4;margin:0;font-weight:700}
+.item .hd .grow{flex:1}
+.item .badge{flex:none;font-size:11px;font-weight:700;color:var(--muted);padding:3px 10px;border:1px solid var(--line2);border-radius:999px;background:var(--card2)}
+.item h4{font-size:15px;margin:18px 0 6px}
+.item.premium{background:linear-gradient(180deg,var(--rose1),var(--rose2));border-color:var(--rose-line)}
+.checks{list-style:none;margin:6px 0 14px;padding:0}
+.checks li{position:relative;padding:5px 0 5px 30px;font-size:14.5px}
+.checks li::before{content:"✓";position:absolute;left:0;top:7px;width:20px;height:20px;border-radius:50%;background:var(--pink);color:#fff;font-size:11px;font-weight:800;display:grid;place-items:center;line-height:1}
+.step{margin:16px 0 4px;font-size:13px;font-weight:700;color:var(--pink2);display:flex;align-items:center;gap:8px}
+.step::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--pink)}
+.scene{background:var(--card2);border-left:3px solid var(--pink);border-radius:0 12px 12px 0;padding:12px 14px;margin:12px 0;font-size:14.5px}
+.tip{background:var(--good-soft);border:1px solid #c9e6d3;border-radius:14px;padding:12px 14px;margin:12px 0;font-size:14.5px}
+.tip > b:first-child{color:var(--good);display:block;font-size:13px;margin-bottom:2px}
+.warnbox{background:var(--risk-soft);border:1px solid #f4c7cf;border-radius:14px;padding:12px 14px;margin:12px 0;font-size:14.5px}
+.warnbox > b:first-child{color:var(--risk);display:block;font-size:13px;margin-bottom:2px}
+.check{font-size:13.5px;background:var(--card2);border-radius:14px;padding:12px 14px;margin:14px 0 2px;color:var(--muted)}
+.check .y{color:var(--good);font-weight:700;margin-right:4px}.check .n{color:var(--risk);font-weight:700;margin-right:4px}
+.small{font-size:12.5px;color:var(--faint)}
+.qa{list-style:none;padding:0;margin:8px 0}
+.qa li{background:var(--card2);border-radius:12px;padding:10px 14px;margin:8px 0;font-size:14.5px}
+.qa li b{color:var(--pink2)}
+ul.plain,ol.plain{padding-left:20px;margin:8px 0}
+ul.plain li,ol.plain li{margin:8px 0}
+.sig{display:block;font-size:12.5px;color:var(--faint);margin-top:2px}
+
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin:10px 0}
+th,td{border-bottom:1px solid var(--line);padding:9px 8px;text-align:left;vertical-align:top}
+th{font-weight:600;color:var(--muted);font-size:12px;background:var(--card2)}
+tr:last-child td{border-bottom:0}
+.scroll{overflow-x:auto}
+.tag{display:inline-block;font-size:11.5px;font-weight:700;border-radius:999px;padding:1px 9px;background:#f3ebe7;color:var(--muted);white-space:nowrap}
+.tag.bad{color:var(--risk);background:var(--risk-soft)} .tag.ok{color:var(--good);background:var(--good-soft)} .tag.mid{color:var(--warn);background:var(--warn-soft)}
+
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}
+.tile{background:var(--card2);border:1px solid var(--line);border-radius:16px;text-align:center;padding:14px 6px 12px}
+.tile .e{font-size:26px}
+.tile .k{font-weight:700;font-size:14px;margin-top:4px}
+.tile .s{font-size:11.5px;color:var(--faint)}
+.tile .v{font-weight:800;font-size:18px;margin-top:6px}
+.tile .v.hi{color:var(--pink2)} .tile .v.lo{color:var(--su)}
+.bars .row{display:grid;grid-template-columns:104px 1fr 92px;gap:10px;align-items:center;margin:12px 0 2px;font-size:13px}
+.bars .row > span:first-child{font-weight:600}
+.bars .why{font-size:12.5px;color:var(--muted);margin:0 0 8px}
+.track{height:8px;background:#f1e6e1;border-radius:6px;overflow:hidden}
+.fill{height:100%;border-radius:6px;background:var(--pink)}
+.top3 .it{margin:18px 0 6px}
+.top3 .it .h{display:flex;justify-content:space-between;gap:10px;font-weight:700;margin-bottom:8px;font-size:15px}
+.top3 .fill{background:linear-gradient(90deg,#f0a0b2,#e2738b)}
+.top3 .ex{font-size:13px;color:var(--muted);margin:4px 0 8px}
+
+.fit{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center}
+.fit .lab{font-size:15px}
+.fit .lab b{display:block;font-size:19px}
+.fit .big{display:flex;gap:8px}
+.fit .big div{width:62px;height:76px;border-radius:14px;background:#fff;border:1px solid var(--rose-line);display:grid;place-items:center;text-align:center;line-height:1.2;box-shadow:0 6px 16px rgba(226,115,139,.15)}
+.fit .big strong{font-size:24px;display:block}
+.fit .big small{font-size:10.5px;color:var(--muted)}
+.fit-label{color:var(--pink2);font-weight:700;margin:18px 0 4px;font-size:15.5px}
+
+.types{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0}
+.type{background:var(--card2);border:1px solid var(--line);border-radius:16px;padding:14px 10px;text-align:center;font-size:12.5px;color:var(--muted)}
+.type .nm{font-size:16px;font-weight:800;color:var(--fg);margin:4px 0 6px}
+.type.on{background:linear-gradient(180deg,#fde3e8,#fff4f2);border-color:var(--pink);box-shadow:0 8px 22px rgba(226,115,139,.2)}
+
+.calbox .top{display:flex;justify-content:space-between;align-items:center;color:var(--pink2);font-size:14px;font-weight:700}
+.calnav{display:flex;gap:6px}
+.calnav button{width:32px;height:32px;border-radius:50%;border:1px solid var(--line2);background:var(--card);color:var(--fg);cursor:pointer;font-size:15px}
+.calnav button:disabled{opacity:.3;cursor:default}
+.calbody{display:grid;grid-template-columns:1fr 228px;gap:12px;align-items:start;margin-top:16px}
+.calbody .mn{font-size:30px;font-weight:600;line-height:1.2}
+.calbody .yr{font-size:30px;font-weight:800;line-height:1.3}
+.calbody .gd{color:var(--muted);font-size:13.5px;margin-top:16px;line-height:1.6}
+.calbody .gd b{color:var(--fg);display:block}
+.calbody .mo{margin-top:8px}
+.dots{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
+.dots .w{font-size:11.5px;color:var(--faint);text-align:center}
+.dots .d{aspect-ratio:1;border-radius:8px;background:#f5ece8;font-size:10px;color:#bba8a1;display:grid;place-items:center}
+.dots .d.e{visibility:hidden}
+.dots .d.good{background:var(--pink);color:#fff;font-weight:700;box-shadow:0 4px 10px rgba(226,115,139,.45)}
+.dots .d.move{box-shadow:inset 0 0 0 1.5px var(--pink);color:var(--pink2);font-weight:700}
+.dots .d.today{color:var(--fg);box-shadow:inset 0 0 0 1px var(--muted)}
+.calleg{font-size:12px;color:var(--faint);margin-top:10px}
+.calleg i{display:inline-block;width:10px;height:10px;border-radius:3px;vertical-align:-1px;margin:0 4px 0 8px}
+
+.yrs{list-style:none;margin:10px 0;padding:0;position:relative}
+.yrs::before{content:"";position:absolute;left:7px;top:8px;bottom:8px;width:2px;background:var(--line2)}
+.yrs li{position:relative;padding:4px 0 14px 30px;font-size:14px}
+.yrs li::before{content:"";position:absolute;left:1px;top:9px;width:14px;height:14px;border-radius:50%;background:var(--card);border:2px solid var(--line2)}
+.yrs li.up::before{background:var(--pink);border-color:var(--pink);box-shadow:0 0 0 4px var(--pink-soft)}
+.yrs li.down::before{border-color:var(--risk)}
+.yrs .y{font-weight:800;margin-right:8px;font-size:15px}
+.yrs .dd{display:block;font-size:13px;color:var(--muted);margin-top:2px}
+
+.pillars{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:12px 0 4px}
+.pl{background:var(--card);border:1px solid var(--line);border-radius:16px;text-align:center;padding:12px 4px 10px}
+.pl.me{border-color:var(--pink);background:var(--pink-soft)}
+.pl .lb{font-size:11px;color:var(--faint)}
+.pl .gz{font-size:26px;line-height:1.25;font-weight:700;margin:4px 0 2px;font-family:'Noto Serif KR','Pretendard',serif}
+.pl .tg{font-size:11.5px;color:var(--muted)}
+.mok{color:var(--mok)}.hwa{color:var(--hwa)}.to{color:var(--to)}.geum{color:var(--geum)}.su{color:var(--su)}
+
+.next{display:block;width:100%;margin:28px 0 0;padding:16px;border:0;border-radius:18px;background:var(--pink);color:#fff;font-weight:700;font-size:16px;cursor:pointer;box-shadow:0 10px 24px rgba(226,115,139,.3)}
+.next small{display:block;font-weight:500;color:#ffe3e9;font-size:12px}
+footer{margin-top:40px;font-size:12px;color:var(--faint);line-height:1.7}
+.toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);background:var(--fg);color:#fff;border-radius:999px;padding:9px 16px;font-size:13px;opacity:0;transition:.2s;pointer-events:none}
+.toast.on{opacity:1}
+
+@media (max-width:520px){
+  .intro h1,.hero h1,.ch h2{font-size:23px}
+  .ch{grid-template-columns:1fr 84px}
+  .ch .orb{width:80px;height:80px;font-size:40px}
+  .pl .gz{font-size:21px}
+  .toc .t{font-size:14px}
+  .calbody{grid-template-columns:1fr}
+  .calbody .gd{margin-top:6px}
+  .bars .row{grid-template-columns:92px 1fr 84px;font-size:12.5px}
+  .fit{grid-template-columns:1fr}
+}
+
+/* ── 2027 신년운세 추가 ── */
+.mgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:14px 0 4px}
+.mt{border:1px solid var(--line2);background:var(--card);border-radius:14px;padding:10px 4px 8px;text-align:center;cursor:pointer;color:var(--fg);line-height:1.3}
+.mt .m{display:block;font-weight:800;font-size:17px}
+.mt .s{display:block;font-size:11px;color:var(--faint);margin-top:2px}
+.mt.hi{background:var(--pink-soft);border-color:var(--pink-line)}
+.mt.hi .s{color:var(--pink2);font-weight:700}
+.mt.warn{background:#f5efec}
+.mt.warn .s{color:var(--risk);font-weight:700}
+.mt[aria-pressed=true]{outline:2px solid var(--pink);outline-offset:1px;box-shadow:0 6px 16px rgba(226,115,139,.25)}
+.mt:focus-visible{outline:2px solid var(--pink2);outline-offset:2px}
+.mdet{margin-top:16px;border-top:1px dashed var(--line2);padding-top:14px}
+.mdet .mh{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
+.mdet .mh b{font-size:20px}
+.dm3{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
+.heat{display:grid;grid-template-columns:52px repeat(4,1fr);gap:4px;margin:12px 0;font-size:12.5px}
+.heat .h{font-weight:700;color:var(--muted);text-align:center;font-size:12px;padding:4px 0}
+.heat .r{font-weight:700;display:flex;align-items:center}
+.heat .c{border-radius:8px;text-align:center;padding:7px 0;background:#f3ebe7;color:var(--muted)}
+.heat .c.hi{background:var(--pink);color:#fff;font-weight:700}
+.heat .c.warn{background:var(--risk-soft);color:var(--risk);font-weight:700}
+.vs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0}
+.vs div{background:var(--card2);border:1px solid var(--line);border-radius:16px;padding:12px 6px;text-align:center}
+.vs div.on{background:linear-gradient(180deg,#fde3e8,#fff4f2);border-color:var(--pink)}
+.vs .y{font-weight:800;font-size:15px}
+.vs .g{font-size:12px;color:var(--faint);margin:2px 0 6px}
+.half{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
+.half div{background:var(--card2);border-radius:14px;padding:12px 14px;font-size:13.5px}
+.half b{display:block;color:var(--pink2);font-size:12.5px;margin-bottom:2px}
+@media (max-width:520px){
+  .half{grid-template-columns:1fr}
+  .heat{grid-template-columns:44px repeat(4,1fr);font-size:12px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ═══════════ 입력 화면 ═══════════ -->
+<section id="inputView">
+  <div class="intro">
+    <div class="orb" aria-hidden="true"><span>🐑</span></div>
+    <div class="eyebrow">2027 FORTUNE</div>
+    <h1>붉은 양의 해,<br><b>나의 2027년은?</b></h1>
+    <p class="sub">생년월일시를 넣으면, 사주를 몰라도 읽히는<br>2027 정미년 운세를 바로 보여드려요.</p>
+    <div class="chs">
+      <div><span>CHAPTER 1</span><b>한 해 총운</b>올해 키워드 · 12달 캘린더</div>
+      <div><span>CHAPTER 2</span><b>일·직장운</b>승진·이직·취업에 좋은 달</div>
+      <div><span>CHAPTER 3</span><b>재물운</b>돈이 들어오는 달 · 새는 달</div>
+      <div><span>CHAPTER 4</span><b>연애·인간관계운</b>인연의 달 · 나를 돕는 사람</div>
+    </div>
+  </div>
+
+  <form class="card" id="f" novalidate>
+    <div class="field">
+      <label for="name">이름 <small>닉네임도 괜찮아요</small></label>
+      <input type="text" id="name" maxlength="12" placeholder="예: 지민" autocomplete="off">
+    </div>
+    <div class="field">
+      <span class="lab" id="dlab">생년월일 <small>양력</small></span>
+      <div class="row3" role="group" aria-labelledby="dlab">
+        <select id="by" aria-label="태어난 해"></select>
+        <select id="bm" aria-label="태어난 달"></select>
+        <select id="bd" aria-label="태어난 날"></select>
+      </div>
+      <div class="hint">음력 생일만 알면, 먼저 양력으로 바꿔서 넣어 주세요.</div>
+    </div>
+    <div class="field">
+      <span class="lab" id="tlab">태어난 시각 <small>24시간 기준 (0시~23시)</small></span>
+      <div class="row2" role="group" aria-labelledby="tlab">
+        <select id="bh" aria-label="태어난 시"></select>
+        <select id="bi" aria-label="태어난 분"></select>
+      </div>
+      <div class="hint">예) 오후 3시 20분 → 15시 20분 · 모르면 「모름」을 골라 주세요.</div>
+    </div>
+    <div class="field">
+      <span class="lab" id="glab">성별 <small>10년 흐름의 방향이 달라져요</small></span>
+      <div class="seg" role="radiogroup" aria-labelledby="glab">
+        <label><input type="radio" name="g" value="F" checked><span>여성</span></label>
+        <label><input type="radio" name="g" value="M"><span>남성</span></label>
+      </div>
+    </div>
+    <div class="field">
+      <span class="lab" id="slab">일 상황 <small>일·직장운 풀이가 달라져요</small></span>
+      <div class="seg" role="radiogroup" aria-labelledby="slab">
+        <label><input type="radio" name="s" value="work" checked><span>💼 일하는 중</span></label>
+        <label><input type="radio" name="s" value="prep"><span>📝 취업 준비 중</span></label>
+      </div>
+    </div>
+    <div class="field">
+      <span class="lab" id="llab">연애 상황 <small>연애운 풀이가 달라져요</small></span>
+      <div class="seg" role="radiogroup" aria-labelledby="llab">
+        <label><input type="radio" name="l" value="single" checked><span>🌱 혼자예요</span></label>
+        <label><input type="radio" name="l" value="couple"><span>💞 만나는 사람 있어요</span></label>
+      </div>
+    </div>
+    <p class="err" id="err" role="alert"></p>
+    <button type="submit" class="cta">내 2027년 운세 보기</button>
+    <p class="privacy">🔒 입력한 정보는 이 기기 안에서만 계산돼요. 어디에도 저장하거나 보내지 않아요.</p>
+  </form>
+</section>
+
+<!-- ═══════════ 결과 화면 ═══════════ -->
+<section id="resultView" hidden>
+  <div class="appbar">
+    <div class="top">
+      <button type="button" class="back" id="again">← 다시 입력</button>
+      <span class="ttl">2027 신년운세</span>
+      <button type="button" class="share" id="share">링크 복사</button>
+    </div>
+    <div role="tablist" aria-label="챕터">
+      <button role="tab" id="t1" aria-selected="true" aria-controls="p1">1 · 한 해 총운</button>
+      <button role="tab" id="t2" aria-selected="false" aria-controls="p2" tabindex="-1">2 · 일·직장운</button>
+      <button role="tab" id="t3" aria-selected="false" aria-controls="p3" tabindex="-1">3 · 재물운</button>
+      <button role="tab" id="t4" aria-selected="false" aria-controls="p4" tabindex="-1">4 · 연애·관계운</button>
+      <button role="tab" id="t5" aria-selected="false" aria-controls="p5" tabindex="-1">풀이 근거</button>
+    </div>
+  </div>
+  <div id="head"></div>
+  <section role="tabpanel" id="p1" aria-labelledby="t1"></section>
+  <section role="tabpanel" id="p2" aria-labelledby="t2" hidden></section>
+  <section role="tabpanel" id="p3" aria-labelledby="t3" hidden></section>
+  <section role="tabpanel" id="p4" aria-labelledby="t4" hidden></section>
+  <section role="tabpanel" id="p5" aria-labelledby="t5" hidden></section>
+  <footer>건강·수명·결혼 여부는 다루지 않아요. 사주는 한 해를 계획할 때 참고하는 재료이고, 실제 결정은 돈·계약·관계 같은 현실 조건이 먼저예요. 계산은 이 기기 안에서만 이뤄져요.</footer>
+</section>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script src="engine.js"></script>
+<script>
+(function () {
+'use strict';
+var SE = window.SajuEngine;
+var $ = function (id) { return document.getElementById(id); };
+var YEAR = 2027;
+
+/* ══════════ 기본 상수 ══════════ */
+var BR_EL = [4, 2, 0, 0, 2, 1, 1, 2, 3, 3, 2, 4];
+var EL_CLS = ['mok', 'hwa', 'to', 'geum', 'su'];
+var EL_PLAIN = ['나무', '불', '흙', '쇠', '물'];
+var STEM_K = ['갑', '을', '병', '정', '무', '기', '경', '신', '임', '계'];
+var BR_K = ['자', '축', '인', '묘', '진', '사', '오', '미', '신', '유', '술', '해'];
+var GI = {}; SE.TENGOD.forEach(function (n, i) { GI[n] = Math.floor(i / 2); });
+var GP = ['버티는 힘', '내보내는 힘', '쓰는 힘', '붙잡는 틀', '받아들이는 힘'];
+var GSHORT = ['나 자신·동료', '표현·결과물', '돈·성과', '책임·자리', '배움·도움'];
+var YM = { 0: 2, 2: 8, 1: 11, 3: 5 };   // 삼합 그룹(지지 %4) → 역마 지지
+var DH = { 0: 9, 2: 3, 1: 6, 3: 0 };    // 삼합 그룹(지지 %4) → 도화 지지
+var STEM_IMG = ['큰 나무', '풀과 덩굴', '한낮의 해', '등불', '큰 산', '논밭의 흙', '단단한 원석', '다듬은 보석', '큰 강', '빗물'];
+var BR_IMG = ['한겨울 밤의 물', '얼어붙은 겨울 흙', '이른 봄의 나무', '한창 봄의 꽃나무', '봄비 머금은 흙', '초여름의 불', '한여름 정오의 불', '한여름 끝의 뜨겁고 마른 흙', '초가을의 쇠', '한가을의 보석', '늦가을의 마른 흙', '초겨울의 물'];
+
+/* ══════════ 해석 규칙표 ══════════
+   문장 규칙: 해요체 · 단언 · 「왜 → 실제 모습 → 그림자 → 이렇게」 · 실천은 언제·무엇을·얼마나 */
+var YG = [
+  { nick: '사람이 모이고 겨루는 해', kw: '#사람', key: '사람',
+    scene: ['「같이 해 보자」는 제안이 들어와요.', '비교되고 경쟁하는 구도가 생겨요.', '친구·동료 모임이 잦아지고 내 편이 늘어요.'],
+    shadow: '내 몫이 나뉘기 쉬워요. 「같이 하자」로 시작한 일이 돈이나 공(功) 문제로 서운해지기도 해요.',
+    tip: '같이 하는 일은 시작할 때 역할과 몫을 숫자로 적어 두세요. 돈 빌려주기·보증은 올해만큼은 거절하세요.' },
+  { nick: '내 것을 세상에 내놓는 해', kw: '#표현', key: '표현',
+    scene: ['아이디어가 많이 떠오르고 말할 기회가 늘어요.', '배우기보다 만들어서 내놓고 싶어져요.', '발표·글·SNS처럼 나를 보여 주는 일이 잘 풀려요.'],
+    shadow: '말이 앞서서 윗사람이나 규칙과 부딪히기 쉬워요. 쉬지 않고 내놓다가 지치기도 해요.',
+    tip: '올해 만든 결과물 하나를 밖에 공개하세요(발표·포트폴리오·글). 대신 윗사람에게 하는 말은 한 번 더 다듬어서 하세요.' },
+  { nick: '돈과 기회를 손에 쥐는 해', kw: '#돈', key: '돈',
+    scene: ['일거리와 돈 이야기가 늘어나요.', '이사·계약·투자처럼 현실적인 결정을 할 일이 생겨요.', '여러 일을 동시에 굴리게 돼요.'],
+    shadow: '기회가 보이면 한꺼번에 벌이기 쉬워요. 들어오는 만큼 나가는 돈도 커져요.',
+    tip: '들어오는 돈의 일정 비율(예: 30%)을 받는 날 자동이체로 먼저 떼어 두세요. 동시에 벌이는 일은 3개까지만 하세요.' },
+  { nick: '책임과 자리가 커지는 해', kw: '#자리', key: '자리',
+    scene: ['승진·직책·평가처럼 「나를 재는 일」이 걸려요.', '맡는 책임과 지켜야 할 규칙이 늘어요.', '윗사람과 조직의 시선이 나에게 모여요.'],
+    shadow: '압박과 스트레스가 커져요. 거절을 못 해서 일이 계속 붙기도 해요.',
+    tip: '새로 맡는 일은 범위와 마감을 문서(메일·메신저)로 받아 두세요. 휴가 일정은 1월에 먼저 확정하세요.' },
+  { nick: '배우고 채우는 해', kw: '#배움', key: '배움',
+    scene: ['공부·자격·교육에 마음이 가요.', '도와주는 윗사람이나 선배가 나타나요.', '계약·문서·집처럼 「서류 일」이 생겨요.'],
+    shadow: '생각이 많아져서 시작이 늦어져요. 배우기만 하고 써먹지 못하면 답답해져요.',
+    tip: '올해 끝낼 자격·교육 하나를 정해서 끝까지 마치세요. 계약서는 서명 전에 하루 묵혀 다시 읽으세요.' }
+];
+var MDO = [
+  '같이 할 사람과 몫을 숫자로 정해 두기',
+  '만든 것 하나를 밖에 내놓기(발표·공개·제출)',
+  '들어온 돈의 30%를 먼저 떼어 두기',
+  '맡는 일의 범위와 마감을 문서로 받기',
+  '자격·교육 하나 등록하거나 끝내기'
+];
+var WORK_G = {
+  work: ['동료와 겨루는 구도가 생겨요. 협업 프로젝트에서 내 몫을 처음부터 분명히 하세요.',
+         '결과물을 보여 줄 기회가 늘어요. 기획·발표·제안을 내기 좋아요.',
+         '실적과 숫자가 걸리는 일이 늘어요. 성과를 숫자로 남기기 좋아요.',
+         '승진·직책·평가가 걸려요. 책임이 커지는 만큼 인정받을 기회도 커요.',
+         '교육·자격·도와주는 선배가 들어와요. 전문성을 쌓기 좋아요.'],
+  prep: ['같이 준비하는 사람이 힘이 돼요. 경쟁자도 늘어나니 남과 비교하는 시간은 줄이세요.',
+         '포트폴리오·자기소개서처럼 나를 보여 주는 서류가 잘 풀려요.',
+         '현실 감각이 살아나요. 연봉·조건을 표로 비교해서 지원할 곳을 고르세요.',
+         '「소속」이 생기는 기운이에요. 공채·정규직 지원에 가장 좋은 기운이에요.',
+         '자격증·교육이 결과로 이어져요. 시험 일정을 이 시기에 맞추세요.']
+};
+var MONEY_G = [
+  ['나가는 돈과 나눠 먹을 사람이 늘어요.', '모임·경조사·같이 쓰는 돈이 커지고, 「같이 투자하자」는 말이 들어와요.', '나눠야 할 돈이라면 처음에 비율을 정하고, 남의 돈 문제에 보증은 서지 마세요.'],
+  ['만든 것이 돈으로 이어지는 통로가 열려요.', '부업·프리랜서·사이드 프로젝트처럼 내 재주로 버는 돈이 생기기 좋아요.', '작게라도 「내 이름으로 판 것」 하나를 만들어 보세요. 금액보다 통로가 열리는 게 중요해요.'],
+  ['돈과 일거리가 직접 들어와요.', '수입이 늘거나 돈이 오가는 결정(이사·투자·큰 구매)이 생겨요.', '들어오는 돈은 받는 날 바로 나눠 두세요. 한꺼번에 큰 결정을 몰아서 하지 마세요.'],
+  ['돈보다 자리와 책임이 먼저 와요.', '직함·평가가 오르고, 그게 1~2년 뒤 연봉으로 이어지는 구조예요.', '올해는 연봉 협상 근거(해낸 일 3개)를 쌓는 해로 보세요. 고정 지출을 줄여 두면 좋아요.'],
+  ['돈보다 문서와 자산이 먼저 와요.', '계약·집·자격처럼 「서류로 남는 것」이 생겨요. 당장의 현금보다 오래 가는 자산이에요.', '계약서는 서명 전에 하루 묵혀 다시 읽으세요. 공부·자격에 쓰는 돈은 아끼지 않아도 돼요.']
+];
+var HELP = ['같은 처지의 친구·동료', '내 이야기를 들어 주고 표현하게 해 주는 사람(후배·청중)', '현실 감각 있는 사람(돈·실무에 밝은 사람)', '기준을 잡아 주는 윗사람·상사', '가르쳐 주는 선배·스승'];
+var HELP_DO = ['같은 목표를 가진 사람과 스터디·모임을 하나 만들어 보세요.', '내 생각을 들어 줄 사람에게 한 달에 한 번은 털어놓으세요.', '돈·실무 고민은 혼자 끌지 말고 현실 감각 있는 사람에게 숫자를 보여 주고 물어보세요.', '믿을 만한 윗사람 한 명에게 분기마다 방향을 물어보세요.', '배우고 싶은 분야의 선배에게 먼저 연락해 커피 한 잔을 청해 보세요.'];
+var DRAIN = ['내 몫을 같이 나누자는 사람', '말이 많고 일을 벌이자는 사람', '돈 이야기부터 꺼내는 사람', '책임만 넘기는 사람', '조언만 하고 함께 움직이지는 않는 사람'];
+var AREA = { '연주': '바깥 환경·집안', '월주': '일터·사회생활', '일주': '나와 가장 가까운 사람', '시주': '결과물·아랫사람' };
+var AREA_WHERE = { '연주': '태어난 해', '월주': '태어난 달', '일주': '태어난 날', '시주': '태어난 시' };
+var REL_CLASH = { '연주': '집안 일이나 사는 곳에 변화가 생기기 쉬워요. 이사·가족 일정이 겹칠 수 있어요.',
+  '월주': '부서·담당·회사 환경이 바뀌기 쉬워요. 끌려가기보다 변화를 먼저 제안하는 쪽이 유리해요.',
+  '일주': '가까운 사람과의 관계, 생활 패턴이 흔들려요. 큰 다툼은 하루 미루고 말하세요.',
+  '시주': '진행하던 결과물이 방향을 틀어요. 후배·아랫사람 일에 신경 쓸 일이 생겨요.' };
+var REL_HAP = { '연주': '바깥에서 좋은 연결이 들어와요. 소개·추천이 잘 붙어요.',
+  '월주': '일터와 손발이 잘 맞아요. 협업이 잘 풀려요.',
+  '일주': '가까운 사람과 더 가까워져요. 연애·관계가 한 걸음 나아가기 좋아요.',
+  '시주': '하던 일이 모양을 갖춰요. 결과물이 하나로 묶여 나와요.' };
+var REL_RUB = { '연주': '집안·바깥 일에 자잘하게 손볼 일이 생겨요.',
+  '월주': '일터에서 은근히 신경 쓰이는 일이 생겨요. 감정보다 문서로 처리하세요.',
+  '일주': '가까운 사이에 서운한 일이 쌓이기 쉬워요. 작은 것부터 바로 말하세요.',
+  '시주': '결과물을 몇 번 고쳐야 할 수 있어요. 마감에 여유를 두세요.' };
+var REL_NM = { '충': '정면으로 부딪힘', '육합': '서로 끌어당김', '반합': '손을 잡음', '천간합': '마음이 묶임', '천간충': '겉으로 부딪힘', '형': '마찰', '자형': '스스로 몰아붙임', '파': '잔금', '해': '은근한 신경 쓰임', '삼합 완성': '기운이 한 덩어리로 뭉침', '방합 완성': '기운이 한 덩어리로 뭉침', '삼형 완성': '마찰이 겹침' };
+
+/* ══════════ 도우미 ══════════ */
+function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+function bat(w) { var c = w.charCodeAt(w.length - 1); return c >= 0xAC00 && c <= 0xD7A3 && (c - 0xAC00) % 28 !== 0; }
+function iga(w) { return bat(w) ? '이' : '가'; }
+function eun(w) { return bat(w) ? '은' : '는'; }
+function eul(w) { return bat(w) ? '을' : '를'; }
+function ieyo(w) { return bat(w) ? '이에요' : '예요'; }
+var MODE = 'work', LOVE = 'single';
+function W(work, prep) { return MODE === 'prep' ? prep : work; }
+function L(single, couple) { return LOVE === 'couple' ? couple : single; }
+function sEl(s) { return Math.floor(s / 2); }
+function pct(n) { return Math.round(n * 100); }
+function badge(t) { return '<span class="badge">' + t + '</span>'; }
+function lvl(k) { return { '계산': '<span class="lv k">계산</span>', '사주 구조': '<span class="lv g">사주 구조</span>', '옛 해석': '<span class="lv t">옛 해석</span>', '참고': '<span class="lv">참고</span>', '우리 기준': '<span class="lv m">우리 기준</span>' }[k]; }
+function item(id, icon, no, title, bdg, body, prem) {
+  return '<article class="item' + (prem ? ' premium' : '') + '" id="' + id + '"><div class="hd"><div class="ico">' + icon + '</div><div class="grow"><div class="n">' + no + '</div><h3>' + title + '</h3></div>' + (bdg ? badge(bdg) : '') + '</div>' + body + '</article>';
+}
+function chHead(no, t1, t2, sub, icon) {
+  return '<div class="ch"><div><div class="no">' + no + '</div><h2>' + t1 + '<br><b>' + t2 + '</b></h2><p class="sub">' + sub + '</p></div><div class="orb" aria-hidden="true"><span>' + icon + '</span></div></div>';
+}
+function toc(list) {
+  return '<nav class="toc">' + list.map(function (a) { return '<a href="#' + a[0] + '"><div class="ico">' + a[1] + '</div><div class="t">' + a[2] + '</div><div class="d">' + a[3] + '</div></a>'; }).join('') + '</nav>';
+}
+function nextBtn(t, title, sub) { return '<button type="button" class="next" data-go="' + t + '">' + title + '<small>' + sub + '</small></button>'; }
+function tagV(v, txt) { return '<span class="tag ' + (v === 'hi' ? 'ok' : v === 'warn' ? 'bad' : '') + '">' + txt + '</span>'; }
+function vword(v) { return { hi: '좋은 해', mid: '무난한 해', warn: '버티는 해' }[v]; }
+function mword(v) { return { hi: '좋음', mid: '보통', warn: '조심' }[v]; }
+function key(l, v, d, c) { return '<div class="key"><div class="l">' + l + '</div><div class="v ' + c + '">' + v + '</div><div class="d">' + d + '</div></div>'; }
+function gzSpan(s, b) { return '<span class="' + EL_CLS[sEl(s)] + '">' + SE.STEM_C[s] + '</span><span class="' + EL_CLS[BR_EL[b]] + '">' + SE.BR_C[b] + '</span>'; }
+function byDom(list, d, asc) { return list.slice().sort(function (a, c) { return asc ? a.dom[d].sc - c.dom[d].sc : c.dom[d].sc - a.dom[d].sc; }); }
+function mlist(ms) { return ms.map(function (m) { return m.m + '월'; }).join(' · '); }
+
+/* ══════════ 분석 ══════════ */
+function analyze(IN) {
+  var R = SE.computeAll({ year: IN.year, month: IN.month, day: IN.day, hour: IN.hour, minute: IN.minute, gender: IN.gender });
+  var A = { R: R, IN: IN, N: IN.name || '당신' };
+  A.dm = R.saju.day.s; A.dmEl = sEl(A.dm);
+  var pw = R.power.weighted, tot = pw.reduce(function (a, b) { return a + b; }, 0) || 1;
+  A.elOfG = function (g) { return (A.dmEl + g) % 5; };
+  A.gOfEl = function (e) { return (e - A.dmEl + 5) % 5; };
+  A.share = [0, 1, 2, 3, 4].map(function (g) { return pw[A.elOfG(g)] / tot; });
+  var yo = R.yongsin, hiEl = 0, loEl = 0;
+  pw.forEach(function (v, i) { if (v > pw[hiEl]) hiEl = i; if (v < pw[loEl]) loEl = i; });
+  A.yp = (yo.primary !== null && yo.primary !== undefined) ? yo.primary : loEl;
+  A.ypFallback = (yo.primary === null || yo.primary === undefined);
+  A.ys = (yo.suwon !== null && yo.suwon !== undefined) ? yo.suwon : (A.yp + 4) % 5;
+  var av = (yo.eokbu && yo.eokbu.avoid && yo.eokbu.avoid.length) ? yo.eokbu.avoid[0] : hiEl;
+  if (av === A.yp) av = hiEl === A.yp ? null : hiEl;
+  A.av = av;
+  A.ypg = A.gOfEl(A.yp); A.avg = av === null ? null : A.gOfEl(av);
+  A.gbi = (R.geupso && R.geupso.critical) ? R.geupso.critical.bi : null;
+  A.byLab = {}; R.cells.forEach(function (c) { A.byLab[c.label] = c; });
+  A.tc = R.tenGodCount;
+  A.cat = R.strength.category;
+  A.sp = IN.gender === 'M' ? 2 : 3;   // 배우자성(옛 해석): 남성 = 재성, 여성 = 관성
+  A.ymBr = []; A.dhBr = [];
+  [R.saju.year.b, R.saju.day.b].forEach(function (b) {
+    if (A.ymBr.indexOf(YM[b % 4]) < 0) A.ymBr.push(YM[b % 4]);
+    if (A.dhBr.indexOf(DH[b % 4]) < 0) A.dhBr.push(DH[b % 4]);
+  });
+  A.now = new Date();
+
+  var yp = SE.computeSaju(YEAR, 7, 1, 12, 0).year;
+  A.Y = full(A, yp.s, yp.b);
+  A.side = [YEAR - 1, YEAR, YEAR + 1].map(function (y) {
+    var p = SE.computeSaju(y, 7, 1, 12, 0).year, j = judge(A, p.s, p.b); j.year = y; return j;
+  });
+  A.months = [];
+  for (var m = 1; m <= 12; m++) {
+    var mp = SE.computeSaju(YEAR, m, 15, 12, 0).month, mj = full(A, mp.s, mp.b);
+    mj.m = m; A.months.push(mj);
+  }
+  A.daeun = (R.daeun.list || []).map(function (d) { var j = judge(A, d.s, d.b); j.year = d.year; j.age = d.age; return j; });
+  A.D = null; A.daeun.forEach(function (d) { if (d.year <= YEAR) A.D = d; });
+  A.dayCache = {};
+  return A;
+}
+
+function judge(A, s, b) {
+  var R = A.R, sc = 0, why = [], yp = A.yp, ys = A.ys, av = A.av;
+  var rel = SE.transitRelations(s, b, R.pillars, A.gbi), se = sEl(s), be = BR_EL[b];
+  var upYp = se === yp, dnYp = be === yp;
+  if (upYp) sc += 2; else if (se === ys) sc += 1; else if (se === av) sc -= 1;
+  if (dnYp) sc += 2; else if (be === ys) sc += 1; else if (be === av) sc -= 1;
+  if (upYp && dnYp) why.push('부족한 기운이 위아래로 가득 들어와요');
+  else if (upYp || dnYp) why.push('부족한 기운이 들어와요');
+  else if (se === ys || be === ys) why.push('부족한 기운을 만들어 주는 기운이 들어와요');
+  if ((se === av && av !== null) && (be === av)) why.push('이미 넘치는 기운이 위아래로 더 들어와요');
+  else if (av !== null && (se === av || be === av)) why.push('이미 넘치는 기운이 더 들어와요');
+  rel.forEach(function (r) {
+    if (r.geupso) {
+      if (/합/.test(r.t)) { sc += 2; why.push('회복 자리가 단단해져요'); }
+      else if (r.t === '충') { sc -= 3; why.unshift('회복 자리가 정면으로 흔들려요'); }
+      else if (/형|파|해/.test(r.t)) { sc -= 1; why.push('회복 자리에 잔마찰이 생겨요'); }
+    }
+    if (r.t === '천간충' && yp !== null) {
+      var c = R.pillars.filter(function (q) { return q.label === r.at.charAt(0); })[0];
+      if (c && sEl(c.s) === yp) { sc -= 2; why.unshift('부족한 기운을 정면으로 쳐요'); }
+    }
+    if (/완성/.test(r.t) && r.el !== undefined) {
+      if (r.el === yp) { sc += 2; why.push('필요한 기운이 한 덩어리로 모여요'); }
+      else if (r.el === av) { sc -= 2; why.unshift('넘치는 기운이 한 덩어리가 돼요'); }
+    }
+  });
+  var gb = false; R.pillars.forEach(function (q) { if (sEl(q.s) === yp && Math.abs(q.s - s) === 5) gb = true; });
+  if (gb) { sc -= 2; why.unshift('필요한 기운이 있는데 묶여서 못 써요'); }
+  var seen = {}; why = why.filter(function (w) { if (seen[w]) return false; seen[w] = 1; return true; });
+  var PRI = ['회복 자리가 정면으로 흔들려요', '부족한 기운을 정면으로 쳐요', '필요한 기운이 있는데 묶여서 못 써요', '넘치는 기운이 한 덩어리가 돼요', '부족한 기운이 위아래로 가득 들어와요', '회복 자리가 단단해져요', '필요한 기운이 한 덩어리로 모여요'];
+  why.sort(function (a, c) { var x = PRI.indexOf(a), y = PRI.indexOf(c); return (x < 0 ? 99 : x) - (y < 0 ? 99 : y); });
+  return { s: s, b: b, sc: sc, v: sc >= 3 ? 'hi' : (sc <= -2 ? 'warn' : 'mid'), why: why, rel: rel,
+    g: GI[SE.TENGOD[SE.stemTenGod(A.dm, s)]], gb: GI[SE.TENGOD[SE.branchTenGod(A.dm, b)]],
+    tgS: SE.TENGOD[SE.stemTenGod(A.dm, s)], tgB: SE.TENGOD[SE.branchTenGod(A.dm, b)],
+    ym: A.ymBr.indexOf(b) >= 0, dh: A.dhBr.indexOf(b) >= 0, gz: SE.STEM_C[s] + SE.BR_C[b], gzK: STEM_K[s] + BR_K[b] };
+}
+
+/* 영역별 판정 — 총운 점수를 바탕에 깔고, 들어오는 글자의 힘(십성)과 자리(궁)로 더하고 뺀다 */
+function domains(A, j) {
+  var has = function (x) { return j.g === x || j.gb === x; };
+  var base = j.v === 'hi' ? 1 : j.v === 'warn' ? -1 : 0;
+  var at = function (area, re) { return j.rel.filter(function (r) { return r.at === area && re.test(r.t); }).length > 0; };
+  var sang = j.tgS === '상관' || j.tgB === '상관';
+  // 일·직장
+  var w = base, wr = [];
+  if (at('월주', /^충$/)) { w -= 2; wr.push('!' + W('일하는 자리가 흔들려요(부서·담당·환경 변화)', '준비하던 방향이 흔들리기 쉬워요(지원 분야·일정 변화)')); }
+  if (has(1) && sang && A.tc['정관'] > 0) { w -= 2; wr.push('!' + W('내 목소리가 커져서 윗사람·규칙과 부딪히기 쉬워요', '말이 앞서서 면접에서 실수하기 쉬워요')); }
+  if (has(3)) { w += 2; wr.push('책임과 자리가 걸리는 기운이 들어와요'); }
+  if (has(4)) { w += 1; wr.push('배움과 도와주는 사람이 들어와요'); }
+  if (has(1) && !(sang && A.tc['정관'] > 0)) { w += 1; wr.push('내 결과물을 보여 줄 기회가 늘어요'); }
+  if (at('월주', /합/)) { w += 1; wr.push(W('일터와 손발이 잘 맞아요', '지원하는 곳과 결이 잘 맞아요')); }
+  if (j.ym) wr.push('이동 기운이 들어와요');
+  // 재물
+  var mo = base, mr = [];
+  if (has(0)) {
+    if (A.cat === '신강') { mo -= 2; mr.push('!나가는 돈과 나눠 먹을 사람이 늘어요'); }
+    else if (A.cat === '중화') { mo -= 1; mr.push('!사람 때문에 나가는 돈이 늘어요'); }
+    else mr.push('같이 벌 사람이 생기지만 몫은 나눠야 해요');
+  }
+  if (has(2)) {
+    if (A.cat === '신약') { mo += 1; mr.push('돈 기회가 들어오지만 감당할 체력과 관리가 같이 필요해요'); }
+    else { mo += 2; mr.push('돈과 일거리가 직접 들어와요'); }
+  }
+  if (has(1) && !has(2)) { mo += 1; mr.push('만든 것이 돈으로 이어지는 통로가 열려요'); }
+  if (has(4) && !has(2)) mr.push('현금보다 문서·자산이 움직여요');
+  // 연애·관계
+  var lo = base, lr = [];
+  if (at('일주', /^충$/)) { lo -= 2; lr.push('!가까운 관계가 흔들려요'); }
+  if (at('일주', /형|파|해/)) { lo -= 1; lr.push('!가까운 사이에 잔마찰이 생겨요'); }
+  if (has(A.sp)) { lo += 2; lr.push('인연을 뜻하는 기운이 들어와요'); }
+  if (j.dh) { lo += 2; lr.push('사람을 끄는 매력(도화)이 살아나요'); }
+  if (at('일주', /육합|반합/)) { lo += 1; lr.push('가까운 사람과 거리가 좁혀져요'); }
+  if (at('일주', /천간합/)) { lo += 1; lr.push('마음이 끌리는 사람이 생겨요'); }
+  if (A.IN.gender === 'M' && has(0)) { lo -= 1; lr.push('!경쟁자가 끼어들기 쉬워요'); }
+  if (A.IN.gender === 'F' && sang) { lo -= 1; lr.push('!상대에게 바라는 게 많아져서 부딪히기 쉬워요'); }
+  function cls(x) { return x >= 2 ? 'hi' : (x <= -1 ? 'warn' : 'mid'); }
+  // 판정과 같은 방향의 이유를 앞에 — 「좋음」인데 첫 이유가 나쁜 말이면 읽는 사람이 헷갈린다
+  function fin(sc, arr) {
+    var v = cls(sc), neg = [], pos = [];
+    arr.forEach(function (t) { if (t.charAt(0) === '!') neg.push(t.slice(1)); else pos.push(t); });
+    return { sc: sc, v: v, why: v === 'warn' ? neg.concat(pos) : pos.concat(neg) };
+  }
+  return { work: fin(w, wr), money: fin(mo, mr), love: fin(lo, lr) };
+}
+function full(A, s, b) { var j = judge(A, s, b); j.dom = domains(A, j); return j; }
+
+function daysOf(A, m) {
+  if (A.dayCache[m]) return A.dayCache[m];
+  var n = new Date(YEAR, m, 0).getDate(), good = [], move = [];
+  for (var d = 1; d <= n; d++) {
+    var dp = SE.computeSaju(YEAR, m, d, 12, 0).day, j = judge(A, dp.s, dp.b);
+    if (j.sc >= 3) good.push(d); else if (j.ym && j.sc >= 2) move.push(d);
+  }
+  return (A.dayCache[m] = { good: good, move: move });
+}
+
+/* ══════════ 화면 그리기 ══════════ */
+function buildHead(A) {
+  var N = A.N, Y = A.Y;
+  var best = A.months.slice().sort(function (a, c) { return c.sc - a.sc; })[0];
+  var worst = A.months.slice().sort(function (a, c) { return a.sc - c.sc; })[0];
+  var mb = byDom(A.months, 'money')[0], lb = byDom(A.months, 'love')[0];
+  var hhmm = A.IN.hour === null ? '시각 모름' : (A.IN.hour < 10 ? '0' : '') + A.IN.hour + '시 ' + (A.IN.minute < 10 ? '0' : '') + A.IN.minute + '분';
+  var lead = { hi: '흐름이 받쳐 주는', mid: '차근차근 쌓아 가는', warn: '속도를 늦추고 지키는' }[Y.v];
+  var tags = [YG[Y.g].kw]; if (Y.gb !== Y.g) tags.push(YG[Y.gb].kw);
+  tags.push('#' + vword(Y.v).replace(/ /g, ''));
+  if (Y.ym) tags.push('#이동수');
+  if (Y.dom.love.v === 'hi') tags.push('#인연'); if (Y.dom.money.v === 'hi') tags.push('#돈길');
+  var H = '';
+  H += '<header class="hero"><div class="eyebrow">2027 FORTUNE</div><h1>' + esc(N) + '님의<br><b>2027 정미년 운세</b></h1>' +
+    '<div class="meta">' + A.IN.year + '년 ' + A.IN.month + '월 ' + A.IN.day + '일 ' + hhmm + ' · ' + (A.IN.gender === 'M' ? '남성' : '여성') + (A.corrected ? ' · 32분 보정 적용' : '') + '</div></header>';
+  if (A.R.correction && A.R.input.hourKnown && !A.corrected && (A.R.correction.hourChanged || A.R.correction.dayChanged)) {
+    H += '<div class="notice">⏰ <b>태어난 시각이 경계에 걸려 있어요.</b> 한국 시간을 실제 해의 위치로 바꾸면(32분 앞당기면) 태어난 시의 두 글자가 바뀌어서, 풀이 일부가 달라질 수 있어요.<br><button type="button" id="fixBtn">32분 보정해서 다시 보기</button></div>';
+  }
+  if (A.corrected) H += '<div class="notice">⏰ 태어난 시각을 32분 앞당겨(실제 해의 위치 기준) 계산한 결과예요. <button type="button" id="unfixBtn">원래 시각으로 보기</button></div>';
+  H += '<div class="persona"><div class="k">2027년의 ' + esc(N) + '님은</div>' +
+    '<div class="nm">' + lead + ' 한 해 —<br>' + YG[Y.g].nick + '</div>' +
+    '<p>2027년은 <b>丁未(정미)년, 붉은 양의 해</b>예요. 윗글자 丁은 등불 같은 불, 아랫글자 未는 한여름 끝의 뜨겁고 마른 흙이에요. ' + esc(N) + '님에게 丁은 <b>「' + GP[Y.g] + '」</b>(' + GSHORT[Y.g] + '), 未는 <b>「' + GP[Y.gb] + '」</b>(' + GSHORT[Y.gb] + ')' + ro2(GSHORT[Y.gb]) + ' 들어와요.</p>' +
+    '<p>' + (Y.why.length ? '한마디로 ' + Y.why[0] + '. ' : '') + { hi: '그래서 올해는 <b>미뤄 둔 도전을 꺼내기 좋은 해</b>예요.', mid: '그래서 올해는 <b>좋은 달을 골라 움직이면 되는 해</b>예요.', warn: '그래서 올해는 <b>새로 벌이기보다 가진 것을 지키는 해</b>예요.' }[Y.v] + '</p>' +
+    '<div class="chips">' + tags.map(function (t) { return '<span>' + t + '</span>'; }).join('') + '</div></div>';
+  H += '<div class="keys">' +
+    key('올해 흐름', vword(Y.v), Y.why[0] || '크게 밀지도 막지도 않아요', Y.v === 'warn' ? 'r' : 'b') +
+    key('올해 키워드', YG[Y.g].key + (Y.gb !== Y.g ? ' · ' + YG[Y.gb].key : ''), '상반기 ' + YG[Y.g].key + ', 하반기 ' + YG[Y.gb].key + ' 쪽이 더 크게 느껴져요', 'b') +
+    key('가장 좋은 달', best.m + '월', best.v === 'hi' ? '중요한 일은 이 달에' : '12달 중 흐름이 가장 나은 달', 'b') +
+    key('조심할 달', worst.v === 'warn' ? worst.m + '월' : '크게 없음', worst.v === 'warn' ? '큰 결정은 미루는 게 좋아요' : '12달 중 크게 막히는 달이 없어요', worst.v === 'warn' ? 'r' : 'b') +
+    key('돈이 들어오는 달', mb.m + '월', mb.dom.money.why[0] || '12달 중 돈 흐름이 가장 나은 달', 'b') +
+    key(L('인연의 달', '관계가 깊어지는 달'), lb.m + '월', lb.dom.love.why[0] || '12달 중 관계 흐름이 가장 나은 달', 'b') + '</div>';
+  H += '<p class="legend">각 판단 옆 라벨 — ' + lvl('계산') + '만세력으로 계산한 값 · ' + lvl('사주 구조') + '사주에서 바로 읽히는 것 · ' + lvl('옛 해석') + '예전부터 내려오는 해석 · ' + lvl('참고') + '해석이 갈리는 것 · ' + lvl('우리 기준') + '사주를 생활에 연결하려고 정한 기준</p>';
+  return H;
+}
+function ro2(w) { return bat(w) ? '으로' : '로'; }
+
+function buildCh1(A) {
+  var N = A.N, Y = A.Y, H = '', b;
+  H += chHead('CHAPTER 1.', '2027년,', '나에게 어떤 해일까?', '올해의 두 글자가 내 사주와 만나 <em>어떤 한 해를 만드는지</em> 풀어드려요.', '🐑');
+  var best = A.months.slice().sort(function (a, c) { return c.sc - a.sc; })[0];
+  H += toc([['s11', '🔎', '올해의 <em>키워드</em>', YG[Y.g].nick],
+    ['s12', '📈', '작년·내년과 <em>비교하면</em>', '2026 → 2027 → 2028'],
+    ['s13', '🗓️', '<em>12달</em> 캘린더', '가장 좋은 달 ' + best.m + '월'],
+    ['s14', '🧭', '달마다 <em>이렇게 보내세요</em>', '한눈에 보는 12달 × 4영역']]);
+
+  // 1-1
+  b = '<ul class="checks"><li>올해 흐름 — <b>' + vword(Y.v) + '</b></li><li>상반기 키워드 — <b>' + YG[Y.g].key + '</b> · 하반기 키워드 — <b>' + YG[Y.gb].key + '</b></li>' +
+    '<li>이동수 — <b>' + (Y.ym ? '있어요, 움직이고 싶은 마음이 커지는 해' : '없어요, 자리를 지키며 쌓는 해') + '</b></li></ul>';
+  b += '<div class="step">왜 그렇게 보냐면</div><p>丁未년은 2026년 丙午(병오)년에 이어 <b>불 기운이 강하게 이어지는 해</b>예요. ' +
+    (A.yp === 1 ? esc(N) + '님은 불이 부족한 사주라, 2년 연속 모자란 기운이 채워지는 셈이에요.' : A.av === 1 ? esc(N) + '님은 불이 이미 넘치는 사주라, 열이 더해져서 과열되기 쉬운 해예요.' : esc(N) + '님에게 불은 많지도 적지도 않은 기운이라, 불 자체보다 두 글자가 맡은 역할이 더 중요해요.') + '</p>' +
+    '<div class="half"><div><b>상반기 · 윗글자 丁 = ' + GP[Y.g] + '</b>' + YG[Y.g].nick + '. ' + YG[Y.g].scene[0] + '</div><div><b>하반기 · 아랫글자 未 = ' + GP[Y.gb] + '</b>' + YG[Y.gb].nick + '. ' + YG[Y.gb].scene[0] + '</div></div>' +
+    '<p class="small">' + lvl('옛 해석') + '그해의 윗글자는 상반기에, 아랫글자는 하반기에 더 크게 느껴진다고 봐요. 칼로 자르듯 나뉘지는 않아요.</p>';
+  if (Y.why.length) b += '<p>올해 흐름을 이렇게 본 이유 — <b>' + Y.why.slice(0, 3).join('. ') + '.</b></p>';
+  var sc = YG[Y.g].scene.slice(1).concat(Y.gb !== Y.g ? YG[Y.gb].scene.slice(1) : []);
+  b += '<div class="step">실제로는 이런 모습으로 나타나요</div><div class="scene">' + sc.map(function (s) { return '• ' + s; }).join('<br>') + '</div>';
+  b += '<div class="step">그림자도 있어요</div><p>' + YG[Y.g].shadow + (Y.gb !== Y.g ? ' ' + YG[Y.gb].shadow : '') + '</p>';
+  b += '<div class="tip"><b>이렇게 해 보세요</b>' + YG[Y.g].tip + (Y.gb !== Y.g ? '<br>' + YG[Y.gb].tip : '') + '</div>';
+  // 원국과 만나는 자리
+  var rel = Y.rel.filter(function (r) { return AREA[r.at]; });
+  b += '<div class="step">올해 기운이 내 사주와 만나는 자리</div>';
+  if (!rel.length) b += '<p>올해 두 글자는 ' + esc(N) + '님 사주와 크게 부딪히거나 묶이는 자리가 없어요. <b>큰 사건보다는 분위기로 지나가는 해</b>예요. 그만큼 내가 무엇을 하느냐가 결과를 정해요.</p>';
+  else b += '<ul class="plain">' + rel.map(function (r) {
+    var t = r.t === '충' || r.t === '천간충' ? REL_CLASH[r.at] : /합/.test(r.t) ? REL_HAP[r.at] : REL_RUB[r.at];
+    if (r.at === '월주' && MODE === 'prep') t = r.t === '충' || r.t === '천간충' ? '준비하던 분야나 일정이 바뀌기 쉬워요. 끌려가기보다 방향을 먼저 정해 두세요.'
+      : /합/.test(r.t) ? '사회로 나가는 문과 손발이 맞아요. 지원·추천이 잘 붙어요.' : '준비 과정에서 은근히 신경 쓰이는 일이 생겨요. 일정에 여유를 두세요.';
+    return '<li><b>' + AREA[r.at] + '</b> <span class="small">(' + AREA_WHERE[r.at] + ' · ' + r.k + ' · ' + (REL_NM[r.t] || r.t) + ')</span><br>' + t + (r.geupso ? ' <b>이 자리는 ' + esc(N) + '님 회복이 기대고 있는 자리라 더 크게 느껴져요.</b>' : '') + '</li>';
+  }).join('') + '</ul>';
+  H += item('s11', '🔎', '1-1', '2027 정미년은<br>' + esc(N) + '님에게 어떤 해일까?', '사주 구조', b, true);
+
+  // 1-2
+  var S = A.side;
+  b = '<div class="vs">' + S.map(function (y) {
+    return '<div' + (y.year === YEAR ? ' class="on"' : '') + '><div class="y">' + y.year + '</div><div class="g">' + y.gz + '(' + y.gzK + ')</div>' + tagV(y.v, vword(y.v)) + '</div>';
+  }).join('') + '</div>';
+  var d1 = S[1].sc - S[0].sc;
+  b += '<p>' + (d1 >= 2 ? '<b>작년보다 확실히 나아져요.</b> 2026년에 막혔던 일이 있다면 올해 다시 꺼내 보세요.' : d1 <= -2 ? '<b>작년보다 흐름이 무거워져요.</b> 2026년의 속도를 그대로 이어 가기보다 한 단계 늦추세요.' : '<b>작년과 비슷한 결로 이어져요.</b> 2026년에 시작한 일을 이어서 마무리하기 좋아요.') +
+    ' 2028년은 ' + { hi: '흐름이 받쳐 주는 해라, 올해 준비한 것을 내년에 크게 펼칠 수 있어요.', mid: '무난한 해라, 올해 만든 것을 꾸준히 이어 가면 돼요.', warn: '조금 무거운 해라, 중요한 일은 올해 안에 매듭짓는 게 좋아요.' }[S[2].v] + '</p>';
+  if (A.D) {
+    var de = A.D.year + 9;
+    b += '<div class="step">10년 흐름 안에서 보면</div><p>사주에는 10년마다 바뀌는 큰 흐름(대운)이 있어요. ' + esc(N) + '님은 <b>' + A.D.year + '~' + de + '년</b>에 <b>' + { hi: '좋은 10년', mid: '무난한 10년', warn: '버티는 10년' }[A.D.v] + '</b>을 지나고 있어요. ' +
+      (A.D.v === 'hi' && Y.v === 'hi' ? '큰 흐름과 올해 흐름이 <b>같은 방향</b>이라 힘이 크게 실려요.' :
+       A.D.v === 'warn' && Y.v === 'warn' ? '큰 흐름도 올해 흐름도 무거워요. 올해는 <b>버티는 것 자체가 성과</b>예요.' :
+       A.D.v === 'warn' ? '큰 흐름은 무겁지만 올해는 숨이 트이는 해예요. 이 틈에 필요한 걸 챙기세요.' :
+       Y.v === 'warn' ? '큰 흐름은 괜찮은데 올해만 잠시 무거워요. 한 해 쉬어 간다고 생각하세요.' : '올해는 큰 흐름 위에서 무난하게 흘러가요.') + '</p>';
+    if (A.D.year === YEAR || A.D.year === YEAR + 1) b += '<div class="notice">' + A.D.year + '년에 10년 흐름이 바뀌어요. 바뀌는 해 전후에는 생활 환경이 크게 달라지기 쉬워요.</div>';
+  }
+  H += item('s12', '📈', '1-2', '작년·내년과 비교하면?', '계산', b, true);
+
+  // 1-3 12달 캘린더
+  b = '<p>달을 누르면 그 달의 좋은 날과 풀이가 나와요.</p><div class="mgrid" role="group" aria-label="2027년 12달">' + A.months.map(function (m, i) {
+    return '<button type="button" class="mt ' + m.v + '" data-mi="' + i + '" aria-pressed="false"><span class="m">' + m.m + '월</span><span class="s">' + mword(m.v) + '</span></button>';
+  }).join('') + '</div><div class="mdet" id="mdet" aria-live="polite"></div>' +
+    '<div class="calleg"><i style="background:var(--pink)"></i>흐름이 좋은 날<i style="box-shadow:inset 0 0 0 1.5px var(--pink)"></i>이동수가 들어오는 날</div>' +
+    '<p class="small">사주에서 달은 절기(매달 4~8일경)에 바뀌어요. 「3월」은 3월 초 절기부터 4월 초 절기 전까지예요. <b>1월은 입춘(2월 4일) 전이라 아직 2026년 기운이 남아 있어요.</b></p>' +
+    '<p class="small">' + lvl('참고') + '날짜 하나하나의 운은 사주 해석 중 근거가 가장 약한 부분이에요. 날짜를 고를 수 있을 때 참고하는 정도로만 쓰세요.</p>';
+  H += item('s13', '🗓️', '1-3', esc(N) + '님의 2027 캘린더', '계산', b);
+
+  // 1-4 12달 표
+  var bestM = best, worstM = A.months.slice().sort(function (a, c) { return a.sc - c.sc; })[0];
+  b = '<div class="heat" role="table" aria-label="12달 영역별 흐름"><span class="h" role="columnheader">달</span><span class="h" role="columnheader">총운</span><span class="h" role="columnheader">일</span><span class="h" role="columnheader">돈</span><span class="h" role="columnheader">인연</span>' +
+    A.months.map(function (m) {
+      return '<span class="r" role="rowheader">' + m.m + '월</span>' + [m.v, m.dom.work.v, m.dom.money.v, m.dom.love.v].map(function (v) { return '<span class="c ' + v + '" role="cell">' + mword(v) + '</span>'; }).join('');
+    }).join('') + '</div>';
+  b += '<h4>달마다 이렇게 보내세요</h4><div class="scroll"><table><tr><th>달</th><th>흐름</th><th>이렇게 보내세요</th></tr>';
+  A.months.forEach(function (m) {
+    var t;
+    if (m === bestM && m.v === 'hi') t = '<b>12달 중 가장 좋은 달.</b> 올해 가장 중요한 일(도전·결정·고백)을 이 달에';
+    else if (m === worstM && m.v === 'warn') t = '<b>12달 중 가장 무거운 달.</b> 큰 결정·큰 지출은 미루고, 휴가와 쉬는 일정을 이 달에';
+    else if (m.v === 'hi') t = '기회의 달. 미뤄 둔 일을 꺼내서 직접 나서기';
+    else if (m.v === 'warn') t = '조심할 달. 새로 벌이지 말고 하던 일 정리하기';
+    else t = YG[m.g].key + '의 달. ' + MDO[m.g];
+    if (m.ym && m.v !== 'warn') t += ' · 움직이고 싶은 마음이 올라와요';
+    if (m.dh) t += ' · 사람이 끌리는 달';
+    b += '<tr><td style="white-space:nowrap;font-weight:700">' + m.m + '월</td><td>' + tagV(m.v, mword(m.v)) + '</td><td>' + t + '</td></tr>';
+  });
+  b += '</table></div>';
+  H += item('s14', '🧭', '1-4', '한눈에 보는 12달', '사주 구조', b, true);
+  H += nextBtn('t2', 'CHAPTER 2 이어보기', '일·직장운');
+  return H;
+}
+
+function monthDetail(A, i) {
+  var m = A.months[i], dd = daysOf(A, m.m), EN = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  var first = new Date(YEAR, m.m - 1, 1).getDay(), days = new Date(YEAR, m.m, 0).getDate(), today = A.now;
+  var h = '<div class="mh"><b>' + m.m + '월 · ' + m.gzK + '월</b>' + tagV(m.v, '이 달의 흐름 · ' + mword(m.v)) + '</div>' +
+    '<div class="dm3">' + tagV(m.dom.work.v, '일 ' + mword(m.dom.work.v)) + tagV(m.dom.money.v, '돈 ' + mword(m.dom.money.v)) + tagV(m.dom.love.v, '인연 ' + mword(m.dom.love.v)) + '</div>' +
+    '<p>' + YG[m.g].nick.replace('해', '달') + '이에요. ' + (m.why.length ? m.why[0] + '. ' : '') + '이 달에는 <b>' + MDO[m.g] + '</b>를 해 보세요.</p>';
+  var notes = [];
+  if (m.dom.work.why[0]) notes.push('일 — ' + m.dom.work.why[0]);
+  if (m.dom.money.why[0]) notes.push('돈 — ' + m.dom.money.why[0]);
+  if (m.dom.love.why[0]) notes.push('인연 — ' + m.dom.love.why[0]);
+  if (notes.length) h += '<ul class="plain">' + notes.map(function (n) { return '<li>' + n + '</li>'; }).join('') + '</ul>';
+  h += '<div class="calbody"><div><div class="mn">' + EN[m.m - 1] + '</div><div class="yr">' + YEAR + '</div><div class="gd">흐름이 좋은 날<b>' + dd.good.length + (dd.good.length === 1 ? ' Day' : ' Days') + '</b></div></div><div class="dots">';
+  'SMTWTFS'.split('').forEach(function (d) { h += '<span class="w">' + d + '</span>'; });
+  for (var k = 0; k < first; k++) h += '<span class="d e"></span>';
+  for (var d = 1; d <= days; d++) {
+    var cls = dd.good.indexOf(d) >= 0 ? ' good' : (dd.move.indexOf(d) >= 0 ? ' move' : '');
+    if (YEAR === today.getFullYear() && m.m === today.getMonth() + 1 && d === today.getDate()) cls += ' today';
+    h += '<span class="d' + cls + '" title="' + m.m + '/' + d + '">' + d + '</span>';
+  }
+  return h + '</div></div>';
+}
+
+function buildCh2(A) {
+  var N = A.N, Y = A.Y, H = '', b, wd = Y.dom.work;
+  H += chHead('CHAPTER 2.', '2027년의', W('일·직장운', '취업운'), W('승진·이직·평가가 <em>언제, 어떻게</em> 걸리는지 풀어드려요.', '새 자리로 들어가는 <em>타이밍</em>을 짚어드려요.'), '💼');
+  var ranked = byDom(A.months, 'work').filter(function (m) { return m.dom.work.v !== 'warn'; }).slice(0, 3);
+  var bad = byDom(A.months, 'work', true).filter(function (m) { return m.dom.work.v === 'warn'; }).slice(0, 2);
+  var ymM = A.months.filter(function (m) { return m.ym; });
+  H += toc([['s21', '📊', '올해 <em>일의 흐름</em>', mword(wd.v) + ' · ' + YG[Y.g].key + '·' + YG[Y.gb].key],
+    ['s22', '🎯', W('승진·이직', '지원·면접') + '에 <em>좋은 달</em>', ranked.length ? mlist(ranked) : '꾸준히'],
+    ['s23', '🚧', '조심할 <em>장면</em>', bad.length ? mlist(bad) : '크게 없음']]);
+
+  // 2-1
+  b = '<ul class="checks"><li>올해 일의 흐름 — <b>' + mword(wd.v) + '</b></li><li>' + W('올해 가장 크게 걸리는 것', '올해 가장 잘 풀리는 것') + ' — <b>' + YG[Y.g].key + (Y.gb !== Y.g ? ' · ' + YG[Y.gb].key : '') + '</b></li>' +
+    '<li>' + W('자리를 옮길 기운', '새 자리로 들어갈 기운') + ' — <b>' + (Y.ym ? '들어와요' : ymM.length ? mlist(ymM) + '에 잠깐 들어와요' : '올해는 약해요') + '</b></li></ul>';
+  b += '<div class="step">왜 그렇게 보냐면</div><div class="half"><div><b>상반기</b>' + WORK_G[MODE][Y.g] + '</div><div><b>하반기</b>' + WORK_G[MODE][Y.gb] + '</div></div>';
+  if (wd.why.length) b += '<p>올해 일에서 가장 크게 작용하는 것 — <b>' + wd.why.slice(0, 2).join('. ') + '.</b></p>';
+  b += '<div class="step">그래서 올해는</div><p>' + (wd.v === 'hi'
+      ? W('<b>직접 나서는 해</b>예요. 승진 심사·직무 전환·이직처럼 미뤄 둔 도전을 올해 꺼내세요. 기다리면 기회가 다른 사람에게 가요.', '<b>문이 열리는 해</b>예요. 「조금 더 준비하고」 미루지 말고 가장 가고 싶은 곳부터 지원하세요.')
+      : wd.v === 'warn'
+      ? W('<b>자리를 지키는 해</b>예요. 감정이 뜨거워져 그만두고 싶은 순간이 오지만, 퇴사·이직은 다음 조건이 확정된 뒤에만 결정하세요.', '<b>시간이 걸리는 해</b>예요. 불합격이 이어져도 실력보다 흐름 탓이 커요. 지원은 이어 가되 자격·경험을 같이 쌓으세요.')
+      : W('<b>쌓는 해</b>예요. 큰 판을 바꾸기보다 지금 자리에서 성과를 숫자로 남겨 두면, 좋은 해에 그게 몸값이 돼요.', '<b>꾸준히 두드리는 해</b>예요. 좋은 달에 지원을 몰고, 나머지 달엔 서류·포트폴리오를 다듬으세요.')) + '</p>';
+  H += item('s21', '📊', '2-1', '2027년 일의 흐름', '사주 구조', b, true);
+
+  // 2-2
+  b = '';
+  if (ranked.length) {
+    b += '<ul class="checks">' + ranked.map(function (m, i) { return '<li>' + (i + 1) + '순위 — <b>' + m.m + '월</b> ' + tagV(m.dom.work.v, mword(m.dom.work.v)) + '</li>'; }).join('') + '</ul>';
+    b += '<ul class="plain">' + ranked.map(function (m) {
+      return '<li><b>' + m.m + '월</b> — ' + (m.dom.work.why.slice(0, 2).join(', ') || YG[m.g].nick.replace('해', '달')) + '. ' +
+        (m.dom.work.v === 'hi' ? W('면접·연봉 협상·승진 면담처럼 직접 나서는 일을 이 달에 잡으세요.', '서류 제출·면접을 이 달에 몰아서 잡으세요.') : W('성과 보고·제안처럼 나를 보여 주는 일을 잡기 좋아요.', '지원서를 마무리해서 내기 좋아요.')) + '</li>';
+    }).join('') + '</ul>';
+  } else b += '<p>올해는 일에서 특별히 받쳐 주는 달이 뚜렷하지 않아요. 대신 크게 막히는 달도 없으니 꾸준히 움직이면 돼요.</p>';
+  if (ymM.length) b += '<div class="step">움직이고 싶은 마음이 올라오는 달</div><p><b>' + mlist(ymM) + '</b>에는 이동 기운이 들어와요. ' + W('이 달에 「떠나고 싶다」는 마음이 커지면, 그 마음이 조건 때문인지 기운 때문인지 먼저 적어 보세요. 조건 비교표 없이 결정하지 마세요.', '새 공고를 찾고 지원 범위를 넓히기 좋은 달이에요.') + '</p>';
+  b += '<div class="tip"><b>이렇게 준비하세요</b>' + (ranked.length ? ranked[0].m + '월 한 달 전부터 ' : '') + W('해낸 일 3개를 「규모·기간·결과」 숫자로 정리해 두세요. 면접에서도 협상에서도 그게 가장 강한 재료예요.', '자기소개서와 포트폴리오를 완성본으로 만들어 두세요. 좋은 달에 바로 낼 수 있게요.') + '</div>';
+  H += item('s22', '🎯', '2-2', W('승진·이직에 좋은 달은?', '지원·면접에 좋은 달은?'), '사주 구조', b, true);
+
+  // 2-3
+  var sangFlag = A.tc['정관'] > 0 && A.months.some(function (m) { return (m.tgS === '상관' || m.tgB === '상관'); });
+  b = '';
+  if (bad.length) b += '<ul class="plain">' + bad.map(function (m) { return '<li><b>' + m.m + '월</b> — ' + (m.dom.work.why[0] || '흐름이 무거워요') + '. ' + W('이 달에는 퇴사·이직 통보처럼 되돌리기 어려운 결정을 하지 마세요.', '이 달의 결과로 나를 평가하지 마세요. 준비에 집중하는 달이에요.') + '</li>'; }).join('') + '</ul>';
+  else b += '<p>올해는 일에서 크게 막히는 달이 없어요. 그래도 아래 장면은 미리 알아 두면 좋아요.</p>';
+  if (sangFlag) b += W('<div class="warnbox"><b>윗사람과 부딪히는 장면</b>올해 몇몇 달에는 「내 생각을 말하고 싶은 힘」이 커지는데, ' + esc(N) + '님 사주에는 그걸 재는 「기준」도 있어요. 회의에서 바로 반박하기보다 <b>메일로 근거를 붙여 제안</b>하면 같은 말도 훨씬 잘 받아들여져요.</div>',
+    '<div class="warnbox"><b>면접에서 말이 앞서는 장면</b>올해 몇몇 달에는 「내 생각을 말하고 싶은 힘」이 커지는데, ' + esc(N) + '님 사주에는 그걸 재는 「기준」도 있어요. 면접에서 회사 방식을 지적하기보다 <b>「제가 해 본 방법은 이랬어요」처럼 경험으로 말하면</b> 같은 생각도 훨씬 좋게 들려요.</div>');
+  if (Y.rel.some(function (r) { return r.at === '월주' && r.t === '충'; })) b += '<div class="warnbox"><b>일터가 흔들리는 해</b>올해 기운이 ' + esc(N) + '님의 「일하는 자리」와 정면으로 부딪혀요. 조직 개편·담당 변경이 생기기 쉬우니, 변화가 오기 전에 원하는 역할을 먼저 말해 두세요.</div>';
+  var NEED_CHECK = ['같이 버텨 줄 동료가 있는가', '내 아이디어를 낼 자리가 있는가', '성과가 보상으로 바로 이어지는가', '역할과 평가 기준이 분명한가', '배우고 쉴 시간이 보장되는가'];
+  b += '<div class="step">그래서 이렇게 판단하세요</div><div class="tip"><b>' + W('오퍼가 왔을 때 체크리스트', '합격 통보가 왔을 때 체크리스트') + '</b>① 연봉과 근무 조건은 어떤가<br>② ' + NEED_CHECK[A.ypg] + '<br>③ 들어가는 달이 ' + (bad.length ? mlist(bad) + '이 아닌가' : '좋은 달인가') +
+    '<br>→ <b>②가 채워지는 곳</b>이면 ' + W('연봉 차이가 작아도 진지하게 보세요.', '연봉이 조금 낮아도 1순위로 보세요.') + ' ' + esc(N) + '님은 「' + GP[A.ypg] + '」' + iga(GP[A.ypg]) + ' 채워져야 오래 가는 사주예요.</div>';
+  H += item('s23', '🚧', '2-3', '조심할 장면과<br>판단 체크리스트', '사주 구조', b, true);
+  H += nextBtn('t3', 'CHAPTER 3 이어보기', '재물운');
+  return H;
+}
+
+function buildCh3(A) {
+  var N = A.N, Y = A.Y, H = '', b, md = Y.dom.money;
+  H += chHead('CHAPTER 3.', '2027년의', '재물운', '돈이 <em>들어오는 길과 새는 길</em>을 나눠서 풀어드려요.', '💰');
+  var has = function (x) { return Y.g === x || Y.gb === x; };
+  var type = has(2) && A.cat !== '신약' ? '버는 해' : has(2) ? '기회는 많고 관리가 중요한 해' : has(1) ? '벌 통로를 만드는 해' : has(0) ? '새는 돈을 막는 해' : '지키며 모으는 해';
+  var inM = byDom(A.months, 'money').filter(function (m) { return m.dom.money.v !== 'warn'; }).slice(0, 2);
+  var outM = byDom(A.months, 'money', true).filter(function (m) { return m.dom.money.v === 'warn'; }).slice(0, 2);
+  var docM = A.months.filter(function (m) { return (m.g === 4 || m.gb === 4) && m.v !== 'warn'; }).slice(0, 2);
+  H += toc([['s31', '💵', '올해 <em>돈의 흐름</em>', type],
+    ['s32', '📅', '들어오는 달 · <em>새는 달</em>', (inM.length ? mlist(inM) : '—') + ' / ' + (outM.length ? mlist(outM) : '크게 없음')],
+    ['s33', '🧾', '올해 <em>돈 관리 처방</em>', { '신강': '새는 구멍 막기', '신약': '지키는 게 버는 것', '중화': '나눠 담기' }[A.cat]]]);
+
+  // 3-1
+  b = '<ul class="checks"><li>올해 돈의 흐름 — <b>' + mword(md.v) + '</b></li><li>올해는 어떤 해? — <b>' + type + '</b></li><li>돈이 들어오는 길 — <b>' + (has(2) ? '수입 자체' : has(1) ? '내 재주·부업' : has(3) ? '자리 → 내년 연봉' : has(4) ? '문서·자산' : '사람과 같이') + '</b></li></ul>';
+  b += '<div class="step">왜 그렇게 보냐면</div><div class="half"><div><b>상반기</b>' + MONEY_G[Y.g][0] + ' ' + MONEY_G[Y.g][1] + '</div><div><b>하반기</b>' + MONEY_G[Y.gb][0] + ' ' + MONEY_G[Y.gb][1] + '</div></div>';
+  if (md.why.length) b += '<p>' + md.why.slice(0, 2).join(', ') + '.</p>';
+  b += '<p>' + esc(N) + '님은 사주의 힘이 ' + { '신강': '<b>강한 편</b>이라, 돈이 들어와도 감당할 힘은 충분해요. 문제는 들어오는 것보다 <b>나가는 쪽</b>이에요.', '신약': '<b>여린 편</b>이라, 큰돈 기회가 와도 그걸 굴리느라 지치기 쉬워요. 크게 벌이기보다 <b>감당할 만큼만</b> 잡는 게 남는 돈이 커요.', '중화': '<b>균형 잡힌 편</b>이라, 들어오는 만큼 쓰고 남기는 리듬만 지키면 돼요.' }[A.cat] + '</p>';
+  b += '<div class="tip"><b>이렇게 해 보세요</b>' + MONEY_G[Y.g][2] + (Y.gb !== Y.g ? '<br>' + MONEY_G[Y.gb][2] : '') + '</div>';
+  H += item('s31', '💵', '3-1', '2027년 돈의 흐름', '옛 해석', b, true);
+
+  // 3-2
+  b = '<ul class="checks"><li>돈이 들어오는 달 — <b>' + (inM.length ? mlist(inM) : '뚜렷한 달 없음') + '</b></li><li>돈이 새는 달 — <b>' + (outM.length ? mlist(outM) : '크게 없어요') + '</b></li><li>계약·문서에 좋은 달 — <b>' + (docM.length ? mlist(docM) : '따로 꼽지 않아요') + '</b></li></ul>';
+  if (inM.length) b += '<div class="step">들어오는 달</div><ul class="plain">' + inM.map(function (m) { return '<li><b>' + m.m + '월</b> — ' + (m.dom.money.why[0] || '흐름이 받쳐 줘요') + '. 연봉 협상·가격 제안·부업 시작을 이 달에 잡아 보세요.</li>'; }).join('') + '</ul>';
+  if (outM.length) b += '<div class="step">새는 달</div><ul class="plain">' + outM.map(function (m) { return '<li><b>' + m.m + '월</b> — ' + (m.dom.money.why[0] || '흐름이 무거워요') + '. 큰 구매·투자·돈 빌려주기는 이 달을 피하세요.</li>'; }).join('') + '</ul>';
+  if (docM.length) b += '<div class="step">계약·문서에 좋은 달</div><p><b>' + mlist(docM) + '</b>에는 문서와 도움의 기운이 들어와요. 전세·이사·계약서 서명처럼 「서류로 남는 일」을 고를 수 있다면 이 달에 잡으세요.</p>';
+  b += '<div class="scroll"><table><tr><th>달</th><th>돈 흐름</th><th>한 줄</th></tr>' + A.months.map(function (m) {
+    return '<tr><td style="font-weight:700">' + m.m + '월</td><td>' + tagV(m.dom.money.v, mword(m.dom.money.v)) + '</td><td>' + (m.dom.money.why[0] || '평소처럼 쓰고 모으기') + '</td></tr>';
+  }).join('') + '</table></div>';
+  H += item('s32', '📅', '3-2', '돈이 들어오는 달,<br>새는 달', '사주 구조', b, true);
+
+  // 3-3
+  var RX = {
+    '신강': ['벌 힘은 충분해요. 문제는 새는 구멍이에요.', ['받는 날 자동이체로 30%를 먼저 떼어 두기', '「같이 하자」는 투자·동업은 금액 상한을 미리 정하기', '한 달 지출 중 사람 때문에 나간 돈(모임·선물·빌려준 돈)을 따로 적어 보기']],
+    '신약': ['크게 벌이기보다 지키는 게 버는 거예요.', ['고정 지출(구독·보험·할부)부터 한 번 정리하기', '새 투자는 「잃어도 생활에 지장 없는 금액」까지만', '돈 고민은 혼자 끌지 말고 현실 감각 있는 사람에게 숫자를 보여 주고 묻기']],
+    '중화': ['들어오는 만큼 나눠 담는 리듬이 핵심이에요.', ['통장을 생활비·모으는 돈·쓰는 돈 셋으로 나누기', '좋은 달에 늘어난 수입은 절반을 모으는 통장으로', '큰 지출은 좋은 달로 미루기']]
+  }[A.cat];
+  b = '<div class="step">' + RX[0] + '</div><ul class="checks">' + RX[1].map(function (x) { return '<li>' + x + '</li>'; }).join('') + '</ul>';
+  if (A.avg === 0 || has(0)) b += '<div class="warnbox"><b>이것만은 꼭</b>올해는 사람을 통해 돈이 나가는 기운이 있어요. 돈을 빌려주거나 보증을 서야 한다면, 「돌려받지 못해도 괜찮은 금액」까지만 하세요.</div>';
+  b += '<p class="small">' + lvl('우리 기준') + '재물운은 「돈이 들어오는 기운」과 「나를 지치게 하는 기운」을 같이 봐요. 실제 투자 판단은 수익률·위험 같은 현실 조건으로 하세요.</p>';
+  H += item('s33', '🧾', '3-3', '올해 돈 관리 처방', '우리 기준', b, true);
+  H += nextBtn('t4', 'CHAPTER 4 이어보기', '연애·인간관계운');
+  return H;
+}
+
+function buildCh4(A) {
+  var N = A.N, Y = A.Y, H = '', b, ld = Y.dom.love;
+  H += chHead('CHAPTER 4.', '2027년의', '연애·인간관계운', L('새 인연이 <em>언제, 어떻게</em> 들어오는지 풀어드려요.', '지금 관계가 <em>어떻게 흘러가는지</em> 풀어드려요.'), '💞');
+  var good = byDom(A.months, 'love').filter(function (m) { return m.dom.love.v !== 'warn'; }).slice(0, 3);
+  var bad = byDom(A.months, 'love', true).filter(function (m) { return m.dom.love.v === 'warn'; }).slice(0, 2);
+  var dhM = A.months.filter(function (m) { return m.dh; });
+  var helpM = A.months.filter(function (m) { return m.g === A.ypg || m.gb === A.ypg; });
+  H += toc([['s41', '💗', '올해 <em>인연의 흐름</em>', mword(ld.v)],
+    ['s42', '📅', L('인연의 달', '깊어지는 달') + ' · <em>조심할 달</em>', (good.length ? mlist(good) : '—')],
+    ['s43', '🤝', '나를 <em>돕는 사람</em>', HELP[A.ypg].split('(')[0]]]);
+
+  // 4-1
+  var dayRel = Y.rel.filter(function (r) { return r.at === '일주'; });
+  b = '<ul class="checks"><li>올해 인연의 흐름 — <b>' + mword(ld.v) + '</b></li><li>인연을 뜻하는 기운 — <b>' + (Y.g === A.sp || Y.gb === A.sp ? '올해 들어와요' : A.months.some(function (m) { return m.g === A.sp || m.gb === A.sp; }) ? '몇몇 달에 들어와요' : '올해는 약해요') + '</b></li>' +
+    '<li>사람을 끄는 매력(도화)의 달 — <b>' + (dhM.length ? mlist(dhM) : '올해는 없어요') + '</b></li></ul>';
+  b += '<div class="step">왜 그렇게 보냐면</div><p>' + (Y.g === A.sp || Y.gb === A.sp
+      ? '옛 해석에서 ' + (A.IN.gender === 'M' ? '남성' : '여성') + '에게 「' + GP[A.sp] + '」' + eun(GP[A.sp]) + ' 인연을 뜻해요. 올해 그 기운이 ' + (Y.g === A.sp ? '윗글자' : '아랫글자') + '로 들어와요. <b>' + L('새로운 사람을 만날 기회가 평소보다 많은 해', '관계를 한 단계 진지하게 생각하게 되는 해') + '</b>예요.'
+      : '올해 두 글자에는 인연을 뜻하는 기운이 직접 들어오지는 않아요. 대신 ' + (Y.g === 1 || Y.gb === 1 ? '나를 표현하는 힘이 커져서 매력이 드러나기 쉬워요.' : Y.g === 0 || Y.gb === 0 ? '친구·모임이 늘어서 사람을 통해 만나는 기회가 생겨요.' : Y.g === 4 || Y.gb === 4 ? '배우는 자리(수업·모임)에서 자연스럽게 사람을 만나기 좋아요.' : '일과 생활 쪽 변화가 커서, 관계는 달별 흐름을 보고 움직이는 게 좋아요.')) + '</p>';
+  if (dayRel.length) b += '<p>그리고 올해 기운이 ' + esc(N) + '님의 <b>「가장 가까운 사람의 자리」</b>(태어난 날 아랫글자)와 만나요 — ' + dayRel.map(function (r) { return r.k + '(' + (REL_NM[r.t] || r.t) + ')'; }).join(', ') + '. ' +
+    (dayRel.some(function (r) { return r.t === '충'; }) ? L('생활 패턴이 바뀌면서 만나는 사람의 결도 달라져요. 평소 안 가던 곳에서 인연이 생기기 쉬워요.', '두 사람의 생활 리듬이 엇갈리기 쉬워요. 이사·이직 같은 변화가 겹치면 대화를 평소보다 자주 하세요.') :
+     dayRel.some(function (r) { return /합/.test(r.t); }) ? L('곁에 머무는 사람이 생기기 좋아요.', '관계가 단단해지는 해예요. 미뤄 둔 중요한 이야기를 꺼내기 좋아요.') : '사소한 일로 서운함이 쌓이기 쉬워요. 바로바로 말하는 게 좋아요.') + '</p>';
+  b += '<div class="step">그래서 올해는</div><p>' + (ld.v === 'hi' ? L('<b>먼저 움직이는 해</b>예요. 소개를 받거나 새 모임에 나가 보세요. 기다리기만 하면 아까운 해예요.', '<b>관계가 깊어지는 해</b>예요. 여행·기념일·앞으로의 계획 이야기를 올해 꺼내 보세요.')
+      : ld.v === 'warn' ? L('<b>나를 먼저 챙기는 해</b>예요. 외로움 때문에 급하게 시작한 관계는 오래 가기 어려워요. 좋은 달에 천천히 만나 보세요.', '<b>서로 지치기 쉬운 해</b>예요. 다툼이 생기면 결론을 내기보다 하루 미뤄서 이야기하세요. 큰 결정은 좋은 달로 미루세요.')
+      : L('<b>달을 골라 움직이는 해</b>예요. 아래 「인연의 달」에 약속을 몰아서 잡아 보세요.', '<b>잔잔하게 이어지는 해</b>예요. 좋은 달에 함께하는 일정을 만들면 관계에 힘이 붙어요.')) + '</p>';
+  b += '<p class="small">' + lvl('옛 해석') + '옛 책은 이성 관계를 기준으로 「인연의 기운」을 정했어요. 관계의 형태와 상관없이 「사람을 만나고 가까워지는 흐름」으로 읽어 주세요.</p>';
+  H += item('s41', '💗', '4-1', '2027년 인연의 흐름', '옛 해석', b, true);
+
+  // 4-2
+  b = '';
+  if (good.length) b += '<div class="step">' + L('인연의 달', '관계가 깊어지는 달') + '</div><ul class="plain">' + good.map(function (m) {
+    return '<li><b>' + m.m + '월</b> ' + tagV(m.dom.love.v, mword(m.dom.love.v)) + ' — ' + (m.dom.love.why.slice(0, 2).join(', ') || '흐름이 무난해요') + '. ' + L(m.dom.love.v === 'hi' ? '소개팅·모임·고백을 이 달에 잡아 보세요.' : '새 모임에 한 번 나가 보기 좋아요.', m.dom.love.v === 'hi' ? '기념일·여행·중요한 대화를 이 달에 잡아 보세요.' : '둘만의 일정을 하나 만들기 좋아요.') + '</li>';
+  }).join('') + '</ul>';
+  if (bad.length) b += '<div class="step">조심할 달</div><ul class="plain">' + bad.map(function (m) {
+    return '<li><b>' + m.m + '월</b> — ' + (m.dom.love.why[0] || '흐름이 무거워요') + '. ' + L('이 달에 시작하는 관계는 조금 천천히 지켜보세요.', '이 달에는 이별·동거·결혼 같은 큰 결정을 하지 마세요. 다툼은 하루 미뤄서 이야기하세요.') + '</li>';
+  }).join('') + '</ul>';
+  if (!bad.length) b += '<p>올해는 관계에서 크게 흔들리는 달이 없어요.</p>';
+  b += '<div class="scroll"><table><tr><th>달</th><th>인연</th><th>한 줄</th></tr>' + A.months.map(function (m) {
+    return '<tr><td style="font-weight:700">' + m.m + '월</td><td>' + tagV(m.dom.love.v, mword(m.dom.love.v)) + '</td><td>' + (m.dom.love.why[0] || '평소처럼') + '</td></tr>';
+  }).join('') + '</table></div>';
+  H += item('s42', '📅', '4-2', L('인연의 달,', '깊어지는 달,') + '<br>조심할 달', '사주 구조', b, true);
+
+  // 4-3
+  b = '<ul class="checks"><li>올해 나를 돕는 사람 — <b>' + HELP[A.ypg] + '</b></li>' + (A.avg !== null ? '<li>거리를 둘 사람 — <b>' + DRAIN[A.avg] + '</b></li>' : '') + '<li>도와주는 사람이 나타나는 달 — <b>' + (helpM.length ? mlist(helpM.slice(0, 4)) : '따로 꼽지 않아요') + '</b></li></ul>';
+  b += '<div class="step">왜 그렇게 보냐면</div><p>' + esc(N) + '님 사주에서 부족해서 채워야 하는 건 「' + GP[A.ypg] + '」(' + GSHORT[A.ypg] + ')' + ieyo(GSHORT[A.ypg]) + '. 그래서 이 힘을 가진 사람, 곧 <b>' + HELP[A.ypg] + '</b>' + iga(HELP[A.ypg]) + ' 곁에 있을 때 일도 마음도 잘 풀려요.' +
+    (A.avg !== null ? ' 반대로 「' + GP[A.avg] + '」' + eun(GP[A.avg]) + ' 이미 넘쳐서, <b>' + DRAIN[A.avg] + '</b>' + iga(DRAIN[A.avg]) + ' 곁에 많으면 금방 지쳐요.' : '') + '</p>';
+  b += '<div class="tip"><b>이렇게 해 보세요</b>' + HELP_DO[A.ypg] + (helpM.length ? ' 특히 <b>' + mlist(helpM.slice(0, 2)) + '</b>에 연락하면 좋아요.' : '') + '</div>';
+  H += item('s43', '🤝', '4-3', '올해 나를 돕는 사람,<br>거리를 둘 사람', '사주 구조', b, true);
+  H += nextBtn('t5', '풀이 근거 보기', '사주표 · 2027년 12달 간지 · 용어 풀이');
+  return H;
+}
+
+function buildCh5(A) {
+  var R = A.R, N = A.N, H = '', b;
+  H += chHead('APPENDIX.', '이 풀이는', '어디서 나왔을까?', '궁금한 분을 위해 <em>계산 근거와 용어</em>를 쉽게 정리했어요.', '📐');
+  var labs = [['시', '태어난 시'], ['일', '태어난 날 (나)'], ['월', '태어난 달'], ['연', '태어난 해']];
+  b = '<p>사주는 태어난 해·달·날·시를 각각 두 글자씩, 모두 여덟 글자로 나타낸 거예요.</p><div class="pillars">' + labs.map(function (l) {
+    var c = A.byLab[l[0]];
+    if (!c) return '<div class="pl"><div class="lb">' + l[1] + '</div><div class="gz" style="color:var(--faint)">?</div><div class="tg">모름</div></div>';
+    var si = SE.STEM_C.indexOf(c.stem), bi = SE.BR_C.indexOf(c.branch);
+    return '<div class="pl' + (l[0] === '일' ? ' me' : '') + '"><div class="lb">' + l[1] + '</div><div class="gz">' + gzSpan(si, bi) + '</div><div class="tg">' + STEM_K[si] + BR_K[bi] + '</div></div>';
+  }).join('') + '</div><p class="small">글자 색 = 그 글자의 기운 (초록 나무 · 빨강 불 · 노랑 흙 · 회색 쇠 · 파랑 물) · 「태어난 날」의 윗글자 <b>' + SE.STEM_C[A.dm] + '(' + STEM_IMG[A.dm] + ')</b>' + iga(STEM_IMG[A.dm]) + ' 바로 ' + esc(N) + '님 자신이에요. 부족해서 채워야 할 기운은 <b>' + EL_PLAIN[A.yp] + '</b>, 이미 넘치는 기운은 <b>' + (A.av === null ? '뚜렷하지 않음' : EL_PLAIN[A.av]) + '</b>이에요.</p>';
+  H += item('s51', '🀄', 'A', esc(N) + '님의 사주표', '계산', b);
+
+  b = '<p>해와 달에도 두 글자씩 있어요. 그 두 글자가 ' + esc(N) + '님에게 어떤 힘인지, 부족한 기운을 채우는지를 보고 흐름을 정했어요.</p><div class="scroll"><table><tr><th>시기</th><th>간지</th><th>윗글자</th><th>아랫글자</th><th>흐름</th></tr>' +
+    '<tr><td><b>2027년</b></td><td>' + gzSpan(A.Y.s, A.Y.b) + ' ' + A.Y.gzK + '</td><td>' + GP[A.Y.g] + '</td><td>' + GP[A.Y.gb] + '</td><td>' + tagV(A.Y.v, mword(A.Y.v)) + ' <span class="small">' + A.Y.sc + '점</span></td></tr>' +
+    A.months.map(function (m) { return '<tr><td>' + m.m + '월</td><td>' + gzSpan(m.s, m.b) + ' ' + m.gzK + '</td><td>' + GP[m.g] + '</td><td>' + GP[m.gb] + '</td><td>' + tagV(m.v, mword(m.v)) + ' <span class="small">' + m.sc + '점</span></td></tr>'; }).join('') + '</table></div>' +
+    '<p class="small">' + lvl('우리 기준') + '흐름 점수: 부족한 기운 +2, 그 기운을 만드는 기운 +1, 넘치는 기운 −1, 회복 자리 합 +2 / 충 −3 등. 3점 이상 = 좋음, −2점 이하 = 조심. 일·돈·인연은 이 점수 위에 영역별 기운(책임·돈·인연·도화·가까운 사람 자리의 합충)을 더하고 빼서 따로 정했어요.</p>';
+  H += item('s52', '🧮', 'B', '2027년과 12달의 두 글자', '계산', b);
+
+  b = '<div class="scroll"><table><tr><th>이 리포트의 말</th><th>사주 용어</th><th>뜻</th></tr>' +
+    [['버티는 힘', '비겁', '나 자신과 동료·친구. 같은 편이자 경쟁자'], ['내보내는 힘', '식상', '표현·결과물·재주. 내가 밖으로 내놓는 기운'], ['쓰는 힘', '재성', '돈·기회·현실 감각'],
+     ['붙잡는 틀', '관성', '규칙·책임·상사·평가·직함'], ['받아들이는 힘', '인성', '배움·자격·문서·도와주는 사람'],
+     ['부족해서 채워야 할 기운', '용신', esc(N) + '님은 ' + EL_PLAIN[A.yp] + ' — 「' + GP[A.ypg] + '」에 해당해요'],
+     ['인연을 뜻하는 기운', '배우자성', (A.IN.gender === 'M' ? '남성은 재성' : '여성은 관성') + ' (옛 해석)'], ['사람을 끄는 매력', '도화', '子·午·卯·酉 중 내 사주에 맞는 한 글자'], ['이동 기운', '역마', '자리를 옮기고 싶어지는 기운'],
+     ['그해 운 / 그달 운', '세운 / 월운', '해마다, 달마다 바뀌는 두 글자'], ['10년 흐름', '대운', '10년마다 바뀌는 큰 흐름']].map(function (r) { return '<tr><td>' + r[0] + '</td><td>' + r[1] + '</td><td>' + r[2] + '</td></tr>'; }).join('') + '</table></div>';
+  H += item('s53', '📖', 'C', '용어 풀이', '', b);
+
+  var Lm = [];
+  if (!A.R.input.hourKnown) Lm.push('<b>태어난 시각</b> — 시각을 모르는 상태라 「태어난 시」 두 글자 없이 여섯 글자로 풀었어요. 시각을 알면 부족한 기운 판정이 달라질 수 있어요.');
+  else if (A.R.correction && (A.R.correction.hourChanged || A.R.correction.dayChanged)) Lm.push('<b>태어난 시각</b> — 한국 시간을 실제 해의 위치로 바꾸면(32분 앞당기면) 태어난 시의 두 글자가 바뀌어요. 지금 결과는 ' + (A.corrected ? '보정한' : '보정하지 않은') + ' 시각 기준이에요.');
+  if (A.R.strength.borderline) Lm.push('<b>기운의 세기</b> — 「강하지도 약하지도 않은」 경계에 있어서, 재물운의 「힘이 강한 편/여린 편」 판정이 계산 방식에 따라 달라질 수 있어요.');
+  if (A.ypFallback) Lm.push('<b>부족한 기운</b> — 계산에서 하나로 정해지지 않아, 가장 작은 기운을 부족한 기운으로 놓고 풀었어요.');
+  Lm.push('<b>달의 경계</b> — 사주의 달은 양력 1일이 아니라 절기(매달 4~8일경)에 바뀌어요. 양력 1월은 아직 2026년 병오년의 마지막 달이에요.');
+  Lm.push('<b>날짜별 운</b> — 캘린더의 좋은 날은 사주 해석 중 근거가 가장 약한 부분이에요. 해나 달의 흐름과 다르면 해·달을 따르세요.');
+  Lm.push('<b>영역 나누기</b> — 일·돈·인연을 따로 점수 매기는 기준은 옛 책에 그대로 있지 않아서 이 서비스가 정한 기준이에요.');
+  Lm.push('<b>음력</b> — 이 계산기는 양력만 받아요. 음력 생일은 양력으로 바꿔서 넣어야 정확해요.');
+  H += item('s54', '⚠️', 'D', '확인이 필요한 부분', '', '<ul class="plain">' + Lm.map(function (x) { return '<li>' + x + '</li>'; }).join('') + '</ul>');
+  H += nextBtn('t1', '처음으로', 'CHAPTER 1 · 한 해 총운');
+  return H;
+}
+
+/* ══════════ 화면 전환 ══════════ */
+var tabs = [].slice.call(document.querySelectorAll('[role=tab]'));
+function sel(t, scroll) {
+  tabs.forEach(function (x) { var on = x === t; x.setAttribute('aria-selected', on); x.tabIndex = on ? 0 : -1; $(x.getAttribute('aria-controls')).hidden = !on; });
+  t.scrollIntoView({ block: 'nearest', inline: 'center' });
+  if (scroll) { var p = $(t.getAttribute('aria-controls')); window.scrollTo({ top: p.getBoundingClientRect().top + window.scrollY - document.querySelector('.appbar').offsetHeight, behavior: 'smooth' }); }
+}
+tabs.forEach(function (t, i) {
+  t.addEventListener('click', function () { sel(t, true); });
+  t.addEventListener('keydown', function (e) {
+    var n = null;
+    if (e.key === 'ArrowRight') n = tabs[(i + 1) % tabs.length];
+    if (e.key === 'ArrowLeft') n = tabs[(i - 1 + tabs.length) % tabs.length];
+    if (n) { e.preventDefault(); sel(n); n.focus(); }
+  });
+});
+
+function shift32(IN) {
+  var tot = IN.hour * 60 + (IN.minute || 0) - 32, ds = 0;
+  if (tot < 0) { tot += 1440; ds = -1; }
+  var d = new Date(Date.UTC(IN.year, IN.month - 1, IN.day + ds));
+  return { year: d.getUTCFullYear(), month: d.getUTCMonth() + 1, day: d.getUTCDate(), hour: Math.floor(tot / 60), minute: tot % 60, gender: IN.gender, name: IN.name, status: IN.status, love: IN.love };
+}
+function render(IN, corrected) {
+  MODE = IN.status === 'prep' ? 'prep' : 'work';
+  LOVE = IN.love === 'couple' ? 'couple' : 'single';
+  var A = analyze(corrected ? shift32(IN) : IN);
+  A.IN = IN; A.N = IN.name || '당신'; A.corrected = corrected;
+  $('head').innerHTML = buildHead(A);
+  $('p1').innerHTML = buildCh1(A);
+  $('p2').innerHTML = buildCh2(A);
+  $('p3').innerHTML = buildCh3(A);
+  $('p4').innerHTML = buildCh4(A);
+  $('p5').innerHTML = buildCh5(A);
+  $('inputView').hidden = true; $('resultView').hidden = false;
+  sel(tabs[0]);
+  [].forEach.call(document.querySelectorAll('.next'), function (b) { b.addEventListener('click', function () { sel($(b.getAttribute('data-go')), true); }); });
+  var fb = $('fixBtn'); if (fb) fb.addEventListener('click', function () { render(IN, true); });
+  var ub = $('unfixBtn'); if (ub) ub.addEventListener('click', function () { render(IN, false); });
+  // 12달 캘린더 — 지금이 2027년이면 이번 달, 아니면 가장 좋은 달부터
+  var mts = [].slice.call(document.querySelectorAll('.mt'));
+  function pick(i) {
+    mts.forEach(function (x, k) { x.setAttribute('aria-pressed', k === i); });
+    $('mdet').innerHTML = monthDetail(A, i);
+  }
+  mts.forEach(function (x) { x.addEventListener('click', function () { pick(+x.getAttribute('data-mi')); }); });
+  var start = A.now.getFullYear() === YEAR ? A.now.getMonth() : A.months.indexOf(A.months.slice().sort(function (a, c) { return c.sc - a.sc; })[0]);
+  pick(start);
+  var q = '?y=' + IN.year + '&m=' + IN.month + '&d=' + IN.day + (IN.hour === null ? '' : '&h=' + IN.hour + '&mi=' + IN.minute) + '&g=' + IN.gender + '&s=' + MODE + '&l=' + LOVE + (IN.name ? '&n=' + encodeURIComponent(IN.name) : '') + (corrected ? '&c=1' : '');
+  try { history.replaceState(null, '', location.pathname + q); } catch (e) {}
+  window.scrollTo(0, 0);
+}
+
+/* ══════════ 입력 폼 ══════════ */
+(function () {
+  var by = $('by'), bm = $('bm'), bd = $('bd'), bh = $('bh'), bi = $('bi'), thisY = new Date().getFullYear();
+  var o = '<option value="">년도</option>'; for (var y = thisY; y >= 1930; y--) o += '<option value="' + y + '">' + y + '년</option>'; by.innerHTML = o;
+  o = '<option value="">월</option>'; for (var m = 1; m <= 12; m++) o += '<option value="' + m + '">' + m + '월</option>'; bm.innerHTML = o;
+  function days() {
+    var y = +by.value || 2000, m = +bm.value || 1, n = new Date(y, m, 0).getDate(), cur = bd.value;
+    var s = '<option value="">일</option>'; for (var d = 1; d <= n; d++) s += '<option value="' + d + '">' + d + '일</option>';
+    bd.innerHTML = s; if (cur && +cur <= n) bd.value = cur;
+  }
+  days(); by.addEventListener('change', days); bm.addEventListener('change', days);
+  o = '<option value="">시</option><option value="unknown">모름</option>'; for (var h = 0; h <= 23; h++) o += '<option value="' + h + '">' + (h < 10 ? '0' : '') + h + '시</option>'; bh.innerHTML = o;
+  o = ''; for (var mi = 0; mi <= 59; mi++) o += '<option value="' + mi + '">' + (mi < 10 ? '0' : '') + mi + '분</option>'; bi.innerHTML = o;
+  bh.addEventListener('change', function () { bi.disabled = bh.value === 'unknown'; });
+  by.value = '';
+  function radio(n) { return document.querySelector('input[name=' + n + ']:checked').value; }
+
+  $('f').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var err = '';
+    if (!by.value || !bm.value || !bd.value) err = '생년월일을 모두 골라 주세요.';
+    else if (!bh.value) err = '태어난 시각을 고르거나 「모름」을 골라 주세요.';
+    if (err) { $('err').textContent = err; return; }
+    $('err').textContent = '';
+    var IN = { year: +by.value, month: +bm.value, day: +bd.value, hour: bh.value === 'unknown' ? null : +bh.value, minute: bh.value === 'unknown' ? 0 : +bi.value,
+      gender: radio('g'), name: $('name').value.trim(), status: radio('s'), love: radio('l') };
+    try { render(IN, false); } catch (ex) { $('err').textContent = '계산 중 문제가 생겼어요. 입력값을 다시 확인해 주세요.'; if (window.console) console.error(ex); }
+  });
+  $('again').addEventListener('click', function () {
+    $('resultView').hidden = true; $('inputView').hidden = false;
+    try { history.replaceState(null, '', location.pathname); } catch (e) {}
+    window.scrollTo(0, 0);
+  });
+  $('share').addEventListener('click', function () {
+    var url = location.href, t = $('toast');
+    function done(msg) { t.textContent = msg; t.classList.add('on'); setTimeout(function () { t.classList.remove('on'); }, 1800); }
+    if (navigator.clipboard) navigator.clipboard.writeText(url).then(function () { done('링크를 복사했어요'); }, function () { done(url); });
+    else done(url);
+  });
+
+  // URL로 바로 열기: ?y=&m=&d=&h=&mi=&g=&s=&l=&n=&c=1
+  var Q = new URLSearchParams(location.search);
+  if (Q.get('y') && Q.get('m') && Q.get('d')) {
+    var IN = { year: +Q.get('y'), month: +Q.get('m'), day: +Q.get('d'), hour: Q.get('h') === null || Q.get('h') === '' ? null : +Q.get('h'), minute: +(Q.get('mi') || 0), gender: Q.get('g') === 'M' ? 'M' : 'F', name: (Q.get('n') || '').slice(0, 12), status: Q.get('s') === 'prep' ? 'prep' : 'work', love: Q.get('l') === 'couple' ? 'couple' : 'single' };
+    document.querySelector('input[name=s][value=' + IN.status + ']').checked = true;
+    document.querySelector('input[name=l][value=' + IN.love + ']').checked = true;
+    by.value = IN.year; bm.value = IN.month; days(); bd.value = IN.day; bh.value = IN.hour === null ? 'unknown' : IN.hour; bi.value = IN.minute; bi.disabled = IN.hour === null;
+    $('name').value = IN.name; document.querySelector('input[name=g][value=' + IN.gender + ']').checked = true;
+    try { render(IN, Q.get('c') === '1' && IN.hour !== null); } catch (ex) { if (window.console) console.error(ex); }
+  }
+})();
+})();
+</script>
+</body>
+</html>
