@@ -827,6 +827,7 @@ function buildHead(A) {
     H += '<div class="notice">⏰ <b>' + A.pi.name + '(동경 ' + A.pi.lon + '°)</b> 기준으로 태어난 시각을 ' + (A.pi.off === 0 ? '그대로 썼어요' : Math.abs(A.pi.off) + '분 ' + (A.pi.off < 0 ? '앞당겼어요' : '늦췄어요')) + '. 계산에 쓴 시각 — <b>' + hm(A.IN.hour, A.IN.minute) + ' → ' + hm(sh.hour, sh.minute) + '</b>' + (sh.day !== A.IN.day ? ' (' + sh.month + '월 ' + sh.day + '일)' : '') + '.' +
       (A.pi.mer === 127.5 ? ' 태어난 때(1954~1961년)는 한국 표준시가 동경 127.5° 기준이라 그 기준으로 보정했어요.' : '') +
       (A.hourMoved ? ' <b>보정 전과 태어난 시의 두 글자가 달라졌어요(' + A.hourMoved + ').</b>' : ' 태어난 시의 두 글자는 보정 전과 같아요.') +
+      (A.dayMoved ? ' <b>날짜가 넘어가서 태어난 날 두 글자도 바뀌었어요(' + A.dayMoved + ').</b>' : '') +
       '<br><button type="button" class="pq" data-p="">보정 없이 보기</button></div>';
   } else if (A.R.input.hourKnown && A.boundary) {
     H += '<div class="notice">⏰ <b>태어난 시각이 경계에 걸려 있어요.</b> 태어난 곳의 실제 해 위치로 보정하면 태어난 시의 두 글자가 바뀌어서, 풀이 일부가 달라질 수 있어요.<br>' +
@@ -1132,6 +1133,7 @@ function buildCh5(A) {
   if (!A.R.input.hourKnown) Lm.push('<b>태어난 시각</b> — 시각을 모르는 상태라 「태어난 시」 두 글자 없이 여섯 글자로 풀었어요. 시각을 알면 부족한 기운 판정이 달라질 수 있어요.');
   else if (A.pi) Lm.push('<b>태어난 시각</b> — ' + A.pi.name + '(동경 ' + A.pi.lon + '°) 기준으로 ' + (A.pi.off > 0 ? '+' : '') + A.pi.off + '분 보정했어요. 보정(분) = (출생지 경도 − 표준시 기준 경도 ' + A.pi.mer + '°) × 4분이에요. 서머타임(일광절약시간)은 따로 빼지 않았어요 — 해당 시기에 태어났다면 시계 시각에서 1시간을 먼저 빼고 넣어 주세요.');
   else if (A.boundary) Lm.push('<b>태어난 시각</b> — 태어난 곳으로 시간 보정을 하면 태어난 시의 두 글자가 바뀌는 경계 시각이에요. 지금 결과는 보정하지 않은 시계 시각 기준이에요. 입력 화면의 「태어난 곳」을 고르면 보정돼요.');
+  if (A.R.input.hourKnown && A.R.input.hour === 23) Lm.push('<b>밤 11시대 출생</b> — 계산에 쓴 시각이 23시대라 「다음 날의 자시(子時)」로 봤어요. 태어난 날 두 글자는 그날 그대로 두고, 태어난 시 윗글자만 다음 날 기준으로 정했어요(야자시). 23시가 되면 태어난 날까지 다음 날로 넘기는 방식도 있어서, 그 방식으로 보는 곳과는 태어난 날 두 글자가 하루 다를 수 있어요.');
   if (A.R.strength.borderline) Lm.push('<b>기운의 세기</b> — 「강하지도 약하지도 않은」 경계에 있어서, 재물운의 「힘이 강한 편/여린 편」 판정이 계산 방식에 따라 달라질 수 있어요.');
   if (A.ypFallback) Lm.push('<b>부족한 기운</b> — 계산에서 하나로 정해지지 않아, 가장 작은 기운을 부족한 기운으로 놓고 풀었어요.');
   Lm.push('<b>달의 경계</b> — 사주의 달은 양력 1일이 아니라 절기(매달 4~8일경)에 바뀌어요. 양력 1월은 아직 2026년 병오년의 마지막 달이에요.');
@@ -1168,14 +1170,17 @@ function render(IN) {
   A.IN = IN; A.N = IN.name || '당신'; A.pi = pi;
   // 보정 전후 태어난 시 두 글자 비교 / 보정 안 했을 때 경계 여부(서울 기준으로 가늠)
   if (IN.hour !== null) {
-    var raw = SE.computeSaju(IN.year, IN.month, IN.day, IN.hour, IN.minute).hour;
+    var rawS = SE.computeSaju(IN.year, IN.month, IN.day, IN.hour, IN.minute), raw = rawS.hour;
+    var gzOf = function (p) { return SE.STEM_C[p.s] + SE.BR_C[p.b]; };
     if (pi) {
-      var sh = shiftBy(IN, pi.off), now = SE.computeSaju(sh.year, sh.month, sh.day, sh.hour, sh.minute).hour;
-      A.hourMoved = (raw.s !== now.s || raw.b !== now.b) ? SE.STEM_C[raw.s] + SE.BR_C[raw.b] + ' → ' + SE.STEM_C[now.s] + SE.BR_C[now.b] : null;
+      var sh = shiftBy(IN, pi.off), nowS = SE.computeSaju(sh.year, sh.month, sh.day, sh.hour, sh.minute), now = nowS.hour;
+      A.hourMoved = (raw.s !== now.s || raw.b !== now.b) ? gzOf(raw) + ' → ' + gzOf(now) : null;
+      // 0시대 → 전날 23시대처럼 날짜를 넘기면 태어난 날 두 글자도 바뀐다
+      A.dayMoved = (rawS.day.s !== nowS.day.s || rawS.day.b !== nowS.day.b) ? gzOf(rawS.day) + ' → ' + gzOf(nowS.day) : null;
     } else {
       var ref = placeInfo({ place: 'seoul', hour: IN.hour, year: IN.year, month: IN.month, day: IN.day }), s2 = shiftBy(IN, ref.off);
-      var h2 = SE.computeSaju(s2.year, s2.month, s2.day, s2.hour, s2.minute).hour;
-      A.boundary = raw.s !== h2.s || raw.b !== h2.b;
+      var r2 = SE.computeSaju(s2.year, s2.month, s2.day, s2.hour, s2.minute), h2 = r2.hour;
+      A.boundary = raw.s !== h2.s || raw.b !== h2.b || rawS.day.s !== r2.day.s;
     }
   }
   $('head').innerHTML = buildHead(A);

@@ -72,8 +72,11 @@
                                     return { s: (f + (b - 2 + 12) % 12) % 10, b: b }; }
   function dayPillar(y, m, d)     { var n = Math.round((Date.UTC(y, m - 1, d) - Date.UTC(1900, 0, 1)) / 86400000);
                                     var i = ((10 + n) % 60 + 60) % 60; return { s: i % 10, b: i % 12 }; }
+  // 23시대 = 다음 날의 子時(야자시). 일주는 그날 그대로 두고, 시간(時干)만 다음 날 일간 기준으로 일으킨다.
+  // (예: 癸일 23:30 → 壬子 X, 甲子 O. 같은 날 0시대 子時와 천간이 다르다)
   function hourPillar(h, ds)      { var b = (h === 23) ? 0 : Math.floor((h + 1) / 2);
-                                    return { s: (((ds % 5) * 2) % 10 + b) % 10, b: b }; }
+                                    var s0 = (h === 23) ? (ds + 1) % 10 : ds;
+                                    return { s: (((s0 % 5) * 2) % 10 + b) % 10, b: b }; }
 
   function computeSaju(y, m, d, h, mi) {
     var lam = solarLongitude(y, m, d, h, mi);
