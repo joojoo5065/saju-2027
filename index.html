@@ -265,7 +265,11 @@ footer{margin-top:40px;font-size:12px;color:var(--faint);line-height:1.7}
 .vs div.on{background:linear-gradient(180deg,#fde3e8,#fff4f2);border-color:var(--pink)}
 .vs .y{font-weight:800;font-size:15px}
 .vs .g{font-size:12px;color:var(--faint);margin:2px 0 6px}
-ol.rank li{margin:14px 0}
+ol.rank li{margin:18px 0}
+ol.rank li p{margin:6px 0}
+.rank .gz{font-weight:700;margin-left:2px}
+.rank .rk{background:var(--pink-soft);border-radius:10px;padding:8px 10px;font-size:14px}
+.rank .rk b{color:var(--pink2)}
 .rank .sig b{color:var(--pink2)}
 .brk{font-variant-numeric:tabular-nums}
 .half{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
@@ -545,33 +549,114 @@ function brk(dd) {
   return '<span class="brk">' + dd.parts.filter(function (x, i) { return i === 0 || x.p !== 0; })
     .map(function (x) { return x.k + ' ' + sgn(x.p); }).join(' · ') + ' = <b>' + dd.sc + '점</b></span>';
 }
-// 앞 순위와 무엇 때문에 갈렸는지
-function gapWhy(prev, m, d) {
-  var a = prev.dom[d], c = m.dom[d], DN = { work: '일', money: '돈', love: '인연' }[d];
-  function pt(x) { return (x < 0 ? '−' : '') + Math.abs(x) + '점'; }
+/* ── 순위 풀이: 숫자 내역만으로는 「왜 이 달이 앞인지」가 안 읽힌다(사용자 지적).
+   그 달에 들어오는 두 글자 → 내게 부족한 기운과의 관계 → 들어오는 사람 → 다음 순위와 갈린 이유를 문장으로 */
+var K2N = { '자리 기운': '책임·자리 기운', '배움·도움 기운': '배움·도와주는 사람 기운', '결과물 기운': '결과물을 보여 줄 기운',
+  '일터와 합': '일터와 손발이 맞는 기운', '사회의 문과 합': '지원하는 곳과 결이 맞는 기운', '일터 흔들림': '일터가 흔들리는 충', '방향 흔들림': '준비 방향이 흔들리는 충',
+  '윗사람과 마찰': '윗사람과 부딪히는 기운', '말 실수 주의': '말이 앞서는 기운', '돈 기운': '돈이 직접 들어오는 기운', '돈 기운(감당 부담)': '돈 기운',
+  '재주→돈 통로': '재주가 돈이 되는 통로', '나가는 돈': '나가는 돈', '인연 기운': '인연을 뜻하는 기운', '도화': '사람을 끄는 매력(도화)',
+  '가까운 자리 합': '가까운 사람과 가까워지는 기운', '나와 합': '마음이 끌리는 기운', '가까운 자리 충': '가까운 관계가 흔들리는 충',
+  '가까운 자리 마찰': '가까운 사이의 잔마찰', '경쟁자': '경쟁자가 끼어드는 기운', '바라는 게 많아짐': '상대에게 바라는 게 커지는 기운' };
+function kn(k) { return K2N[k] || k; }
+function wa(w) { return bat(w.replace(/\([^)]*\)$/, '')) ? '과' : '와'; }
+function nJoin(a) { if (a.length < 2) return a.join(''); var h = a.slice(0, -1).join(', '); return h + wa(h) + ' ' + a[a.length - 1]; }
+var NEGW = /흔들려|쳐요|묶여|넘치는|마찰/;
+function wp(str, fn) { return str + fn(str.replace(/\([^)]*\)$/, '')); }
+// 부족한 기운(용신)과 이 달 두 글자의 관계 — 짧은 이름표(갈린 이유 비교용)
+function flowTag(A, m) {
+  var se = sEl(m.s), be = BR_EL[m.b], E = EL_PLAIN, y = E[A.yp];
+  if (se === A.yp && be === A.yp) return '부족한 ' + y + iga(y) + ' 위아래로 다 채워지는 달';
+  if (se === A.yp || be === A.yp) return '부족한 ' + y + iga(y) + ' 들어오는 달';
+  if (se === A.ys || be === A.ys) return y + eul(y) + ' 만들어 주는 ' + E[A.ys] + iga(E[A.ys]) + ' 들어오는 달';
+  if (A.av !== null && (se === A.av || be === A.av)) return '이미 넘치는 ' + E[A.av] + iga(E[A.av]) + ' 더 들어오는 달';
+  return '부족한 ' + y + iga(y) + ' 비켜 가는 달';
+}
+function monthStory(A, m) {
+  var N = esc(A.N), se = sEl(m.s), be = BR_EL[m.b], E = EL_PLAIN, y = E[A.yp];
+  var s = '이 달의 두 글자는 <b>' + gzSpan(m.s, m.b) + '(' + m.gzK + ')</b> — 위는 ' + E[se] + ', 아래는 ' + E[be] + ' 기운이에요. ';
+  s += m.g === m.gb ? N + '님에게는 위아래 모두 「' + GP[m.g] + '」(' + GSHORT[m.g] + ')' + ro2(GSHORT[m.g]) + ' 작용해요. '
+    : N + '님에게 위의 ' + E[se] + eun(E[se]) + ' 「' + GP[m.g] + '」(' + GSHORT[m.g] + '), 아래의 ' + E[be] + eun(E[be]) + ' 「' + GP[m.gb] + '」(' + GSHORT[m.gb] + ')' + ro2(GSHORT[m.gb]) + ' 작용해요. ';
+  s += N + '님 사주엔 <b>' + y + '</b>(' + GP[A.ypg] + ') 기운이 부족한데, ';
+  if (se === A.yp && be === A.yp) s += '이 달엔 그 ' + y + iga(y) + ' <b>위아래로 다 들어와요</b>. 비어 있던 자리가 채워지는 달이에요.';
+  else if (se === A.yp || be === A.yp) s += '이 달엔 그 ' + y + iga(y) + ' <b>' + (se === A.yp ? '윗' : '아랫') + '글자로 들어와요</b>.';
+  else if (se === A.ys || be === A.ys) s += '이 달엔 ' + y + eul(y) + ' 만들어 주는 <b>' + E[A.ys] + '</b> 기운이 들어와서 간접적으로 채워 줘요.';
+  else if (A.av !== null && (se === A.av || be === A.av)) s += '이 달엔 ' + y + iga(y) + ' 안 들어오고 이미 넘치는 <b>' + E[A.av] + '</b> 기운이 더 들어와요. 힘이 한쪽으로 쏠리기 쉬워요.';
+  else s += '이 달엔 ' + y + iga(y) + ' 직접 들어오지는 않아요.';
+  var ex = m.why.filter(function (w) { return /회복|정면으로 쳐|묶여|한 덩어리/.test(w); });
+  if (ex.length) s += ' 또 ' + ex.join('. ') + '.';
+  var gs = m.g === m.gb ? [m.g] : [m.g, m.gb];
+  s += ' 사람으로 치면 ' + nJoin(gs.map(function (g) { return HELP[g]; })) + ' 같은 사람이 곁에 오기 쉬운 달이에요.';
+  if (gs.indexOf(A.ypg) >= 0) s += ' 특히 ' + wp(HELP[A.ypg], eun) + ' ' + N + '님에게 부족한 「' + GP[A.ypg] + '」' + eul(GP[A.ypg]) + ' 가진 사람이라, 이 달에 만나는 사람이 큰 힘이 돼요.';
+  if (m.m === 1) s += ' (1월은 입춘 전이라 아직 2026년 기운이에요.)';
+  return s;
+}
+// hi가 lo보다 앞선 이유 — 문장으로
+function gapStory(A, hi, lo, d) {
+  var a = hi.dom[d], c = lo.dom[d], DN = { work: '일', money: '돈', love: '인연' }[d];
   if (a.sc === c.sc) {
-    if (prev.sc !== m.sc) return DN + ' 점수는 ' + prev.m + '월과 같아서, 그 달의 흐름 점수(부족한 기운이 얼마나 채워지는지)로 갈랐어요 — ' + prev.m + '월 ' + pt(prev.sc) + ' · ' + m.m + '월 ' + pt(m.sc) + '.';
-    return '점수가 ' + prev.m + '월과 완전히 같아서 더 이른 달을 앞에 뒀어요.';
+    if (hi.sc === lo.sc) {
+      // 점수는 같아도 들어오는 기운의 성격은 다르다 — 그걸 보여 줘야 읽는 사람이 고를 수 있다
+      var feat = function (x, y) {
+        var yk = y.dom[d].parts.map(function (p) { return p.k; });
+        var f = x.dom[d].parts.filter(function (p) { return p.t && p.p > 0 && yk.indexOf(p.k) < 0; }).map(function (p) { return kn(p.k); });
+        var t = flowTag(A, x); if (t !== flowTag(A, y)) f.push(t.replace(/ 달$/, ' 흐름'));
+        return f;
+      };
+      var fh = feat(hi, lo), fo = feat(lo, hi);
+      if (!fh.length && !fo.length) return '두 달은 들어오는 기운도 점수도 똑같아서 이른 달을 앞에 뒀어요. 어느 달을 골라도 비슷해요.';
+      return '점수는 같고 성격이 달라요. ' + [fh.length ? hi.m + '월은 <b>' + nJoin(fh) + '</b>' : '', fo.length ? lo.m + '월은 <b>' + nJoin(fo) + '</b>' : ''].filter(Boolean).join(', ') +
+        '. 우열이 없어서 이른 달을 앞에 뒀을 뿐이니, 하려는 일에 맞는 쪽을 고르세요.';
+    }
+    var ft = flowTag(A, hi), fl = flowTag(A, lo);
+    return '두 달 모두 ' + DN + ' 쪽 기운은 같아요. 갈린 건 부족한 기운이에요 — ' +
+      (ft !== fl ? hi.m + '월은 <b>' + ft + '</b>이고, ' + lo.m + '월은 ' + fl + '이에요.'
+        : (function () {
+            var hp = hi.why.filter(function (w) { return lo.why.indexOf(w) < 0 && !NEGW.test(w); });
+            var hn = hi.why.filter(function (w) { return lo.why.indexOf(w) < 0 && NEGW.test(w); });
+            var ln = lo.why.filter(function (w) { return hi.why.indexOf(w) < 0 && NEGW.test(w); });
+            var t = [];
+            if (hp.length) t.push(hi.m + '월엔 그 위에 「' + hp.join('」 「') + '」가 더해져요' + (hn.length ? '(「' + hn.join('」 「') + '」도 있지만 더해지는 쪽이 커요)' : ''));
+            if (ln.length) t.push(lo.m + '월엔 「' + ln.join('」 「') + '」가 끼어요');
+            return t.length ? '둘 다 ' + ft + '이지만, ' + t.join('. 반대로 ') + '.' : null;
+          })() || '둘 다 ' + ft + '이지만 흐름 점수가 ' + hi.m + '월 ' + hi.sc + '점, ' + lo.m + '월 ' + lo.sc + '점으로 조금 달라요.') +
+      ' 같은 기회라도 몸과 마음이 받쳐 주는 달이 더 잘 풀려서 ' + hi.m + '월을 앞에 뒀어요.';
   }
   var ck = c.parts.map(function (x) { return x.k; }), ak = a.parts.map(function (x) { return x.k; });
-  var only = a.parts.filter(function (x) { return x.p > 0 && ck.indexOf(x.k) < 0; }).map(function (x) { return x.k + '(' + sgn(x.p) + ')'; });
-  var minus = c.parts.filter(function (x) { return x.p < 0 && ak.indexOf(x.k) < 0; }).map(function (x) { return x.k + '(' + sgn(x.p) + ')'; });
-  var s = prev.m + '월보다 ' + (a.sc - c.sc) + '점 낮아요.';
-  if (only.length) s += ' ' + prev.m + '월에만 있는 것 — ' + only.join(', ') + '.';
-  if (minus.length) s += ' ' + m.m + '월에만 있는 감점 — ' + minus.join(', ') + '.';
-  if (!only.length && !minus.length) s += ' 같은 기운이라도 총운 바탕이 달라요(' + a.parts[0].k + ' · ' + c.parts[0].k + ').';
-  return s;
+  var only = a.parts.filter(function (x) { return x.t && x.p > 0 && ck.indexOf(x.k) < 0; }).map(function (x) { return kn(x.k); });
+  var minus = c.parts.filter(function (x) { return x.t && x.p < 0 && ak.indexOf(x.k) < 0; }).map(function (x) { return kn(x.k); });
+  var s = [];
+  if (only.length) s.push(lo.m + '월엔 ' + hi.m + '월에 있던 <b>' + wp(nJoin(only), iga) + ' 빠져요</b>');
+  if (minus.length) s.push((only.length ? '게다가 ' : '') + lo.m + '월엔 <b>' + wp(nJoin(minus), iga) + ' 끼어요</b>');
+  if (a.parts[0].p !== c.parts[0].p) {
+    // 바탕(총운) 이유 = 그 달 판정의 첫 이유. 없으면 부족한 기운과의 관계
+    // 앞 달은 좋은 쪽 이유, 뒤 달은 발목 잡는 이유를 고른다 — 「보통」인 달에 좋은 말만 붙으면 왜 밀렸는지 안 읽힌다
+    var bw = function (m, pos) {
+      var w = m.why.filter(function (x) { return pos ? !NEGW.test(x) : NEGW.test(x); })[0];
+      return w ? '「' + w + '」' : pos ? flowTag(A, m) : flowTag(A, m) + '이라 「좋음」까지는 못 가요';
+    };
+    var why2 = ' (' + hi.m + '월 ' + bw(hi, true) + ' / ' + lo.m + '월 ' + bw(lo, false) + ')';
+    if (a.parts[0].p > c.parts[0].p) s.push((s.length ? '바탕 흐름도 ' : '같은 기운이 들어와도 바탕 흐름이 ') + hi.m + '월은 「' + mword(hi.v) + '」, ' + lo.m + '월은 「' + mword(lo.v) + '」이에요' + why2);
+    else s.push('바탕 흐름만 보면 ' + lo.m + '월(「' + mword(lo.v) + '」)이 ' + hi.m + '월(「' + mword(hi.v) + '」)보다 낫지만, 위의 차이가 더 커서 ' + hi.m + '월을 앞에 뒀어요');
+  }
+  return s.join('. ') + '.';
 }
 function rankRule(d) {
   return '<p class="small">' + lvl('우리 기준') + '순위는 이렇게 매겼어요 — 그 달의 총운(좋음 +1 · 보통 ±0 · 조심 −1)을 바탕에 깔고, ' +
     { work: '책임·자리(+2), 배움·도움(+1), 결과물(+1) 기운을 더하고 일터가 흔들리는 충(−2) 등을 빼요.', money: '돈 기운(+2, 힘이 여린 사주는 +1), 재주가 돈이 되는 통로(+1)를 더하고 나가는 돈(−1~−2)을 빼요.', love: '인연 기운(+2), 도화(+2), 가까운 자리와의 합(+1)을 더하고 가까운 자리의 충(−2)·마찰(−1)을 빼요.' }[d] +
     ' 점수가 같으면 그 달의 흐름 점수(「풀이 근거」 B표의 점수)가 높은 달, 그것도 같으면 이른 달이 앞이에요.</p>';
 }
-function rankList(list, d, act) {
+function rankList(A, list, d, act) {
+  var DN = { work: W('일', '취업'), money: '돈', love: L('인연', '관계') }[d];
   return '<ol class="plain rank">' + list.map(function (m, i) {
-    var dd = m.dom[d];
-    return '<li><b>' + m.m + '월</b> ' + tagV(dd.v, mword(dd.v)) + '<br>' + (dd.why.slice(0, 2).join('. ') || YG[m.g].nick.replace('해', '달')) + '. ' + act(m) +
-      '<span class="sig">📊 ' + brk(dd) + '</span>' + (i ? '<span class="sig">↕ ' + gapWhy(list[i - 1], m, d) + '</span>' : '') + '</li>';
+    var dd = m.dom[d], rk;
+    if (list.length < 2) rk = '';
+    else if (i === 0) rk = '<b>왜 1순위?</b> ' + list[1].m + '월보다 앞선 이유 — ' + gapStory(A, m, list[1], d);
+    else rk = '<b>왜 ' + (i + 1) + '순위?</b> ' + list[i - 1].m + '월보다 뒤인 이유 — ' + gapStory(A, list[i - 1], m, d);
+    return '<li><b>' + (i + 1) + '순위 · ' + m.m + '월</b> ' + tagV(dd.v, mword(dd.v)) +
+      '<p>' + monthStory(A, m) + '</p>' +
+      '<p>' + DN + ' 쪽으로 보면 — ' + (dd.why.length ? dd.why.join('. ') + '.' : YG[m.g].nick.replace('해', '달') + '이에요.') + ' ' + act(m) + '</p>' +
+      (rk ? '<p class="rk">' + rk + '</p>' : '') +
+      '<span class="sig">📊 ' + brk(dd) + '</span></li>';
   }).join('') + '</ol>';
 }
 function mlist(ms) { return ms.map(function (m) { return m.m + '월'; }).join(' · '); }
@@ -754,8 +839,8 @@ function buildHead(A) {
     '<p>' + (Y.why.length ? '한마디로 ' + Y.why[0] + '. ' : '') + { hi: '그래서 올해는 <b>미뤄 둔 도전을 꺼내기 좋은 해</b>예요.', mid: '그래서 올해는 <b>좋은 달을 골라 움직이면 되는 해</b>예요.', warn: '그래서 올해는 <b>새로 벌이기보다 가진 것을 지키는 해</b>예요.' }[Y.v] + '</p>' +
     '<div class="chips">' + tags.map(function (t) { return '<span>' + t + '</span>'; }).join('') + '</div></div>';
   H += '<div class="keys">' +
-    key('올해 흐름', vword(Y.v), Y.why[0] || '크게 밀지도 막지도 않아요', Y.v === 'warn' ? 'r' : 'b') +
-    key('올해 키워드', YG[Y.g].key + (Y.gb !== Y.g ? ' · ' + YG[Y.gb].key : ''), '상반기 ' + YG[Y.g].key + ', 하반기 ' + YG[Y.gb].key + ' 쪽이 더 크게 느껴져요', 'b') +
+    key('2027년 흐름', vword(Y.v), Y.why[0] || '크게 밀지도 막지도 않아요', Y.v === 'warn' ? 'r' : 'b') +
+    key('2027년 키워드', YG[Y.g].key + (Y.gb !== Y.g ? ' · ' + YG[Y.gb].key : ''), '상반기 ' + YG[Y.g].key + ', 하반기 ' + YG[Y.gb].key + ' 쪽이 더 크게 느껴져요', 'b') +
     key('가장 좋은 달', best.m + '월', best.v === 'hi' ? '중요한 일은 이 달에' : '12달 중 흐름이 가장 나은 달', 'b') +
     key('조심할 달', worst.v === 'warn' ? worst.m + '월' : '크게 없음', worst.v === 'warn' ? '큰 결정은 미루는 게 좋아요' : '12달 중 크게 막히는 달이 없어요', worst.v === 'warn' ? 'r' : 'b') +
     key('돈이 들어오는 달', mb.m + '월', mb.dom.money.why[0] || '12달 중 돈 흐름이 가장 나은 달', 'b') +
@@ -775,7 +860,7 @@ function buildCh1(A) {
     ['s14', '🧭', '달마다 <em>이렇게 보내세요</em>', '한눈에 보는 12달 × 4영역']]);
 
   // 1-1
-  b = '<ul class="checks"><li>올해 흐름 — <b>' + vword(Y.v) + '</b></li><li>상반기 키워드 — <b>' + YG[Y.g].key + '</b> · 하반기 키워드 — <b>' + YG[Y.gb].key + '</b></li>' +
+  b = '<ul class="checks"><li>2027년 흐름 — <b>' + vword(Y.v) + '</b></li><li>상반기 키워드 — <b>' + YG[Y.g].key + '</b> · 하반기 키워드 — <b>' + YG[Y.gb].key + '</b></li>' +
     '<li>이동수 — <b>' + (Y.ym ? '있어요, 움직이고 싶은 마음이 커지는 해' : '없어요, 자리를 지키며 쌓는 해') + '</b></li></ul>';
   b += '<div class="step">왜 그렇게 보냐면</div><p>丁未년은 2026년 丙午(병오)년에 이어 <b>불 기운이 강하게 이어지는 해</b>예요. ' +
     (A.yp === 1 ? esc(N) + '님은 불이 부족한 사주라, 2년 연속 모자란 기운이 채워지는 셈이에요.' : A.av === 1 ? esc(N) + '님은 불이 이미 넘치는 사주라, 열이 더해져서 과열되기 쉬운 해예요.' : esc(N) + '님에게 불은 많지도 적지도 않은 기운이라, 불 자체보다 두 글자가 맡은 역할이 더 중요해요.') + '</p>' +
@@ -898,7 +983,7 @@ function buildCh2(A) {
   b = '';
   if (ranked.length) {
     b += '<ul class="checks">' + ranked.map(function (m, i) { return '<li>' + (i + 1) + '순위 — <b>' + m.m + '월</b> ' + tagV(m.dom.work.v, mword(m.dom.work.v)) + '</li>'; }).join('') + '</ul>';
-    b += rankList(ranked, 'work', function (m) {
+    b += rankList(A, ranked, 'work', function (m) {
       return m.dom.work.v === 'hi' ? W('면접·연봉 협상·승진 면담처럼 직접 나서는 일을 이 달에 잡으세요.', '서류 제출·면접을 이 달에 몰아서 잡으세요.') : W('성과 보고·제안처럼 나를 보여 주는 일을 잡기 좋아요.', '지원서를 마무리해서 내기 좋아요.');
     }) + rankRule('work');
   } else b += '<p>올해는 일에서 특별히 받쳐 주는 달이 뚜렷하지 않아요. 대신 크게 막히는 달도 없으니 꾸준히 움직이면 돼요.</p>';
@@ -944,7 +1029,7 @@ function buildCh3(A) {
 
   // 3-2
   b = '<ul class="checks"><li>돈이 들어오는 달 — <b>' + (inM.length ? mlist(inM) : '뚜렷한 달 없음') + '</b></li><li>돈이 새는 달 — <b>' + (outM.length ? mlist(outM) : '크게 없어요') + '</b></li><li>계약·문서에 좋은 달 — <b>' + (docM.length ? mlist(docM) : '따로 꼽지 않아요') + '</b></li></ul>';
-  if (inM.length) b += '<div class="step">들어오는 달</div>' + rankList(inM, 'money', function () { return '연봉 협상·가격 제안·부업 시작을 이 달에 잡아 보세요.'; }) + rankRule('money');
+  if (inM.length) b += '<div class="step">들어오는 달</div>' + rankList(A, inM, 'money', function () { return '연봉 협상·가격 제안·부업 시작을 이 달에 잡아 보세요.'; }) + rankRule('money');
   if (outM.length) b += '<div class="step">새는 달</div><ul class="plain">' + outM.map(function (m) { return '<li><b>' + m.m + '월</b> — ' + (m.dom.money.why[0] || '흐름이 무거워요') + '. 큰 구매·투자·돈 빌려주기는 이 달을 피하세요.</li>'; }).join('') + '</ul>';
   if (docM.length) b += '<div class="step">계약·문서에 좋은 달</div><p><b>' + mlist(docM) + '</b>에는 문서와 도움의 기운이 들어와요. 전세·이사·계약서 서명처럼 「서류로 남는 일」을 고를 수 있다면 이 달에 잡으세요.</p>';
   b += '<div class="scroll"><table><tr><th>달</th><th>돈 흐름</th><th>한 줄</th></tr>' + A.months.map(function (m) {
@@ -995,7 +1080,7 @@ function buildCh4(A) {
 
   // 4-2
   b = '';
-  if (good.length) b += '<div class="step">' + L('인연의 달', '관계가 깊어지는 달') + '</div>' + rankList(good, 'love', function (m) {
+  if (good.length) b += '<div class="step">' + L('인연의 달', '관계가 깊어지는 달') + '</div>' + rankList(A, good, 'love', function (m) {
     return L(m.dom.love.v === 'hi' ? '소개팅·모임·고백을 이 달에 잡아 보세요.' : '새 모임에 한 번 나가 보기 좋아요.', m.dom.love.v === 'hi' ? '기념일·여행·중요한 대화를 이 달에 잡아 보세요.' : '둘만의 일정을 하나 만들기 좋아요.');
   }) + rankRule('love');
   if (bad.length) b += '<div class="step">조심할 달</div><ul class="plain">' + bad.map(function (m) {
